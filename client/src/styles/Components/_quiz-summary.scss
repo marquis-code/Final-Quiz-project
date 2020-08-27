@@ -1,0 +1,75 @@
+h1 {
+    color: $red;
+    text-align: center;
+   margin-top: $xs;
+ font-family: $quicksand;
+}
+
+.container{
+    padding: $xs $sm $sm $xs;
+    margin: $sm auto;
+    background-color: $offwhite;
+
+    .stat{
+        color: $blue;
+    }
+    
+    .left{
+        padding-left: $xxlg;
+        color: $red;
+    }
+    
+    h2 {
+        text-align: center;
+        padding-bottom: $xs;
+        color: $green;
+    }
+    
+    h4{
+        text-align: center;
+        margin-bottom: $sm;
+    }
+}
+
+.links {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    padding-top: $normal;
+}
+
+.button-link-bth {
+    text-align: right;
+    padding: $sm $md;
+    background-color: $red;
+    color: $offwhite;
+    margin-right: $xxlg;
+    border-radius: $button-radius;
+    font-family: $quicksand;
+    margin-right: $md;
+    padding: $xs $sm;
+    box-shadow: $shadow;
+    transition: 0.3s linear all;
+}
+
+.button-link-pa {
+    text-align: left;
+    padding: $sm $md;
+    background-color: $green;
+    color: $offwhite;
+    border-radius: $button-radius;
+    font-family: $quicksand;
+    margin-right: $md;
+    padding: $xs $sm;
+    box-shadow: $shadow;
+    transition: 0.3s linear all;
+}
+
+.mark {
+    font-size: 7rem;
+    color: $green;
+   position: relative;
+    top: -3px;
+}
+
+
