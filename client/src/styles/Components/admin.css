@@ -1,0 +1,35 @@
+.headDisplay {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
+  font-size: 35px;
+}
+
+.buttonBox {
+  padding: 10px;
+}
+
+.create {
+  margin: 10px 0px;
+  padding: 10px;
+}
+
+.publish {
+  margin: 10px 0px;
+  padding: 10px;
+}
+
+.update {
+  margin: 10px 0px;
+  padding: 10px;
+}
+
+.delete {
+  margin: 10px 0px;
+  padding: 10px;
+}
+
+.returnToQuiz {
+  margin: 10px 0px;
+  padding: 10px;
+  float: right;
+}
+/*# sourceMappingURL=admin.css.map */

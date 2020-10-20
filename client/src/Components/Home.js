@@ -1,38 +1,62 @@
-import React, { Fragment } from 'react';
-import { Helmet } from 'react-helmet';
-import { Link } from 'react-router-dom';
+import React, { Fragment } from "react";
+import { Helmet } from "react-helmet";
+import { Link } from "react-router-dom";
+import {
+  Card,
+  /* CardText, */ CardBody,
+  CardTitle,
+  CardSubtitle,
+  Button,
+} from "reactstrap";
 
-const Home = () =>(
-   <Fragment>
-        <Helmet><title>Nimelssa Quiz-Home</title></Helmet>
-         <div id="home">
-              <section id="hero">
-                  <div className="hero-container" data-aos="fade-up" data-aos-delay="150">
-            
-                    <div className="d-flex">
-                    
-                        <div className="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column" id="container">
-                    
-                            <div role="main" className="inner cover" id="text">
-                                <h1 className="cover-heading">Welcome To <span>NIMELSSA</span> Quiz</h1>
-                                   <p className="lead">Test of Speed,Intelligience and Accuracy</p>
-                                 
-                                    <div className="card-footer text-muted" id="bottomDesign">
-                                        <div className="play-button-container">
-                                            <button className="button"  id="begin"><span><Link to="/quizInstructions">Play</Link></span></button>
-                                    </div>
+const Home = () => (
+  <Fragment>
+    <Helmet>
+      <title>Nimelssa Quiz-Home</title>
+    </Helmet>
+    <div className="Home">
+      <Card>
+        {/* <img src="/download.png" alt="IMG" /> */}
+        <CardBody>
+          <CardTitle className="name-design">
+            <h1 id="text1" className="cover-heading">
+              Welcome To <span>NIMELSSA</span> Quiz
+            </h1>
+          </CardTitle>
+          <br />
+          <CardSubtitle>
+            <Fragment>
+              <h2 id="text2">Test of Speed,Intelligience and Accuracy</h2>
+            </Fragment>
+          </CardSubtitle>
+        </CardBody>
 
-                                         <button className="button"  id="begin"><span><Link to="/register">Register</Link></span></button>
-                                        <button className="button"  id="begin"><span><Link to="/login">Login</Link></span></button>
-                                    </div> 
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>
-            </section>
-           </div> 
-    </Fragment> 
-)
+        <CardBody>
+          <Button block={true} className="mt-3">
+            <span>
+              <Link to="/quizInstructions" id="link1">
+                Play
+              </Link>
+            </span>
+          </Button>
+          <Button block={true} className="mt-3">
+            <span>
+              <Link to="/redirect" id="link2">
+                Register
+              </Link>
+            </span>
+          </Button>
+          <Button block={true} className="mt-3">
+            <span>
+              <Link to="/redirect" id="link3">
+                Login
+              </Link>
+            </span>
+          </Button>
+        </CardBody>
+      </Card>
+    </div>
+  </Fragment>
+);
 
 export default Home;

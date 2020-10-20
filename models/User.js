@@ -4,23 +4,41 @@ const bcrypt = require('bcrypt');
 let UserSchema = new mongoose.Schema ({
     username:{ 
         type: String, 
-        required: true
+        lowercase: true,
+        required:[true, 'Username is required'],
+        minlength: [3, 'Username can\'t be smaller than 3 characters'],
+        maxlength: [64, 'Username can\'t be greater than 64 characters' ]
     },
     matric:{
-        type:Number,
-        required:true,
+        type : Number,
+        required:[true, 'Matric Number is required'],
         unique:true
+        
     },
     password:{
         type:String,
-        required:true,
+        required:[true, 'Password is required'],
         minlength:8,
-        maxlength:250
+        maxlength:200,
+        match: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]).{8,12}$/
+    },
+
+    email:{
+     type: String,
+     unique: true,
+     trim: true,
+     lowercase: true,
+     required:[true, 'Email is required'],
+     match: /(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@[*[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+]*/
     },
     role:{
         type:String,
-        enum:['user','admin'],
-        required:true
+        enum:['user'],
+        default : 'user',
+    },
+    resetPasswordLink: {
+        data: String,
+        default: ''
     }
 });
 
@@ -41,12 +59,12 @@ let UserSchema = new mongoose.Schema ({
            return callback(error);
         else{
             if(!isMatch)
-               return callback(null,isMatch, { message: 'Password incorrect' });
+               return callback(null,isMatch, { message: 'Invalid Matric or Password.'});
             return callback(null,this);
         }
      })
  }
-const User = mongoose.model('User',UserSchema);
+const User = mongoose.model('Registered-Users',UserSchema);
 
 module.exports = User;
 

@@ -1,93 +1,104 @@
 const express = require('express');
 const Quizrouter = express.Router();
 const Quiz = require('../models/Quiz');
-const { all } = require('./User');
+
 
 //Create a new question
-Quizrouter.post('/question',async (req,res) => {
+  Quizrouter.post('/questions', async (req, res, next)=>{
+  try {
+    const { question,optionA, optionB, optionC, optionD, answer, category } = req.body;
 
- try {
-    const { question, options } = req.body;
-
-    const newQuestion = await Quiz.create({
-        question,
-        options
-    });
+   const data = { question,optionA, optionB, optionC, optionD, answer, category }
     
-   return res.status(200).json(newQuestion);
- } catch (error) {
-    return res.status(500).json({'Error': error})
- } 
-  });
+    const newQuestion = await Quiz.create(data);
+   
+    newQuestion.save()
+    .then(()=>{
+      res.status(201).json("Question was sucessfully saved to database");
+    })
+    .catch(()=>{
+      res.status(400).json({'Error': "Sorry!!! Internal server Error"});
+    });
+ 
+   } catch (error) {
+     res.status(500).json({'Error': "Something Went Wrong"});
+   } 
+ })
 
 // Get All Questions
-Quizrouter.get('/questions',async (req, res)=>{
+ Quizrouter.get('/questions', async (req, res, next)=>{
 try {
-    const allQuestions =await Quiz.find();
+    const allQuestions =await Quiz.find().limit(30); //The limit helps to fetch limites amount of data fro MongoDb
     return res.status(200).json(allQuestions);
 } catch (error) {
-    return res.status(500).json({'Error': error});
+  res.status(500).json({'Error': "Something Went Wrong"});
 }
   });
 
 //Get one Question
 
-Quizrouter.get('/questions/:id',async (req, res) => {
-try {
-   const _id = req.params.id;
-   const question =await Quiz.findOne({_id});
+Quizrouter.get('/questions/:id', async(req, res, next) => {
+  const _id = req.params.id; 
+try {                                                           
+   const question = await Quiz.findOne({_id});
    if(!question){
-     return res.status(404).json(`Sorry Question With ID ${_id} Was Not Found`);
+     return res.status(404).json(`Question With ID ${_id} Does Not Exist`);
    }else{
      return res.status(200).json(question);
-   }
+   } 
 } catch (error) {
-    return res.status(500).json({"Error": error});
+     res.status(500).json({
+      "Error": "Something went wrong",
+      "Error Hint" : "Ensure question ID is correct"
+    });
 }
   });
 
 // Update Question
-Quizrouter.put('/questions/:id',async (req, res) => {
-     try {
-        const { question, options } = req.body;
+Quizrouter.put('/questions/:id', async (req, res, next) => {
+     try { 
+        const { question,optionA, optionB, optionC, optionD, answer, category  } = req.body;
         const _id = req.params.id;
 
         let questions = await Quiz.findOne({_id});
 
         if(!questions){
+          
             const newQuestionUpdate = Quiz.create({
-                question,
-                options
-            });
-            return res.status(200).json(newQuestionUpdate);
+              category, question, optionA, optionB, optionC, optionD, answer
+          }); 
+           
+            res.status(200).json(`Question with ID ${_id} was not found; a new question was created`);
         }else{
+            questions.category = category;
             questions.question = question;
-            questions.options = options;
+            questions.optionA = optionA;
+            questions.optionB = optionB;
+            questions.optionC = optionC;
+            questions.optionD = optionD;
+            questions.answer = answer;
             await questions.save();
             return res.status(200).json(questions);
         }
      } catch (error) {
-         return res.status(200).json({"Error": error});
+     return res.status(500).json({'Error': "Something Went Wrong"});
      }
 });
 
 //Delete a Question
 
-Quizrouter.delete('/questions/:id', async (req, res) => {
+Quizrouter.delete('/questions/:id', async (req, res, next) => {
  try {
     const _id = req.params.id;
-    const question =await Quiz.deleteOne({_id});
+    const question =await Quiz.deleteOne({_id}).exec();
  
     if(question.deletedCount === 0){
-       return res.status(404).json(`Sorry Question With ID ${_id} Was Not Found`);
+       return res.status(404).json(`Question With ID ${_id} does not Exist`);
     }else{
-       return res.status(204).json(`Question With ID ${_id} Was Successfully Deleted`);
+       res.status(200).json( `Question With ID ${_id} Was Successfully Deleted`);
     }
  } catch (error) {
-     return res.status(500).json({"Error": error});
+  res.status(500).json({'Error': "Something Went Wrong"});
   } 
    })
-
-
-
 module.exports = Quizrouter;

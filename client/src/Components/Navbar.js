@@ -1,81 +1,121 @@
-import React, {useContext} from 'react';
-import {Link} from 'react-router-dom';
-import AuthService from '../Services/AuthService';
-import { AuthContext } from '../Context/AuthContext';
+import React, {useContext } from "react";
+import { Link } from "react-router-dom";
+import AuthService from "../Services/AuthService";
+import { AuthContext } from "../Context/AuthContext";
+import { Button } from "reactstrap";
 
-const Navbar = (props) =>{
-    const {isAuthenticated,user,setIsAuthenticated,setUser} = useContext(AuthContext);
-    
-    const onClickLogoutHandler = ()=>{
-        AuthService.logout().then(data=>{
-            if(data.success){
-                setUser(data.user);
-                setIsAuthenticated(false);
-            }
-        });
-    }
+const Navbar = (props) => {
+  const { isAuthenticated, user, setIsAuthenticated, setUser } = useContext(
+    AuthContext
+  );
+  console.log(user);
 
-    const unauthenticatedNavBar = ()=>{
-        return (
-            <>
-                <Link to="/">
-                    <li className="nav-item nav-link">
-                        Home
-                    </li>
-                </Link>  
-                <Link to="/login">
-                    <li className="nav-item nav-link">
-                        Login
-                    </li>
-                </Link>  
-                <Link to="/register">
-                    <li className="nav-item nav-link">
-                        Register
-                    </li>
-                </Link>  
-            </>
-        )
-    }
+  const onClickLogoutHandler = () => {
+    AuthService.logout().then((data) => {
+      if (data.success) {
+        setUser(data.user);
+        setIsAuthenticated(false);
+      }
+    });
+  };
 
-    const authenticatedNavBar = ()=>{
-        return(
-            <>
-                <Link to="/">
-                    <li className="nav-item nav-link">
-                        Home
-                    </li>
-                </Link> 
-                <Link to="/quiz">
-                    <li className="nav-item nav-link">
-                        Quiz
-                    </li>
-                </Link> 
-                {
-                    user.role === "admin" ? 
-                    <Link to="/admin">
-                        <li className="nav-item nav-link">
-                            Admin
-                        </li>
-                    </Link> : null
-                }  
-                <button type="button" 
-                        className="btn btn-link nav-item nav-link" 
-                        onClick={onClickLogoutHandler}>Logout</button>
-            </>
-        )
-    }
-    return(
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <Link to="/">
-                <div className="navbar-brand">Nimelssa-Quiz</div>
+  const onClickAdminLogoutHandler = () => {
+    AuthService.adminLogout().then((data) => {
+      if (data.success) {
+        setUser(data.user);
+        setIsAuthenticated(false);
+      }
+    });
+  };
+
+  const unauthenticatedNavBar = () => {
+    return (
+      <>
+        <Link to="/">
+          <li className="nav-item nav-link">
+            <Button block={false} className="mt-0">
+              Home
+            </Button>
+          </li>
+        </Link>
+        <Link to="/redirect">
+          <li className="nav-item nav-link">
+            <Button block={false} className="mt-0">
+              Login
+            </Button>
+          </li>
+        </Link>
+        <Link to="/redirect">
+          <li className="nav-item nav-link">
+            <Button block={false} className="mt-0">
+              Register
+            </Button>
+          </li>
+        </Link>
+      </>
+    );
+  };
+
+  const authenticatedNavBar = () => {
+    return (
+      <>
+        <Link to="/">
+          <li className="nav-item nav-link">
+            <Button block={false} className="mt-0">
+              Home
+            </Button>
+          </li>
+        </Link>
+
+      {user.role === "admin" ? (
+          <>
+              <Link to="/landingPage">
+              <li className="nav-item nav-link">
+                <Button block={false} className="mt-0">
+                  Admin
+                </Button>
+              </li>
             </Link>
-            <div className="collapse navbar-collapse" id="navbarText">
-                <ul className="navbar-nav mr-auto">
-                    { !isAuthenticated ? unauthenticatedNavBar() : authenticatedNavBar()}
-                </ul>
-            </div>
-        </nav>
-    )
-}
+            
+            <Button
+            type="button"
+            block={false}
+            className="mt-4"
+            onClick={onClickAdminLogoutHandler}
+          >
+            {" "}
+            Admin Logout{" "}
+          </Button>
+        </>
+          ) : (
+            <>
+          <Button
+            type="button"
+            block={false}
+            className="mt-4"
+            onClick={onClickLogoutHandler}
+          >
+            {" "}
+            Logout{" "}
+          </Button>
+            </>
+          ) }
+     </>
+    );
+  };
+
+  return (
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <Link to="/">
+        <div className="navbar-brand">Nimelssa-Quiz</div>
+      </Link>
+      <div className="collapse navbar-collapse" id="navbarText">
+        <ul className="navbar-nav mr-auto">
+          {!isAuthenticated ? unauthenticatedNavBar() : authenticatedNavBar()}
+        </ul>
+      </div>
+    </nav>
+  );
+};
 
 export default Navbar;

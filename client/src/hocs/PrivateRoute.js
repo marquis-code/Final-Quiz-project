@@ -2,12 +2,12 @@ import React, {useContext} from 'react';
 import {Route,Redirect} from 'react-router-dom';
 import { AuthContext } from '../Context/AuthContext';
 
-const PrivateRoute = ({component : Component, roles, ...rest})=>{
+ const PrivateRoute = ({component : Component, roles, ...rest})=>{
     const { isAuthenticated, user} = useContext(AuthContext);
     return(
         <Route {...rest} render={props =>{
             if(!isAuthenticated)
-                return <Redirect to={{ pathname: "/login", 
+                return <Redirect to={{ pathname: "/redirect", 
                                        state : {from : props.location}}}/>
             
             if(!roles.includes(user.role))
@@ -16,6 +16,10 @@ const PrivateRoute = ({component : Component, roles, ...rest})=>{
             return <Component {...props}/>
         }}/>
     )
-}
+} 
+
+
+
+
 
 export default PrivateRoute;

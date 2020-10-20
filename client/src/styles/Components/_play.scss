@@ -104,3 +104,10 @@ width: 90%;
 .button-container button:last-child:hover {
     background-color: darken($red, 10%);
 }
+
+@media (max-width: $md-breakpoint) {
+    .questions {
+        width: 100% !important;
+        height: 150% !important;
+    }
+}

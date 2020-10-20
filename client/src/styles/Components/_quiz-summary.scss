@@ -72,4 +72,10 @@ h1 {
     top: -3px;
 }
 
+@media (max-width: $md-breakpoint) {
+    .container {
+        width: 100% !important;
+        height: 150% !important;
+    }
+}
 
