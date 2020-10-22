@@ -7,7 +7,8 @@ class Users extends Component{
     constructor(props){
       super(props);
       this.state = {
-         users : []
+         users : [],
+         errorMessage : ""
       }
     }
 
@@ -21,7 +22,7 @@ class Users extends Component{
   /*       console.log(this.state.users) */
     })
     .catch(()=>{
-            alert('Something went wrong when accessing the back end');
+           this.setState({errorMessage : "Error retrieving User statistics !!!!"})
         });
     }
 
@@ -33,7 +34,7 @@ class Users extends Component{
     onDelete = (id) =>{
         axios
           .delete(`/admin/deleteUser/${id}`)
-          .then((responce) => {
+          .then(() => {
             M.toast({ 
               html: 'User was successfully deleted ',
               classes: "tost-valid",
@@ -51,7 +52,7 @@ class Users extends Component{
       };
 
     render(){
-        const {users} = this.state;
+        const {users, errorMessage} = this.state;
         return(
             <Fragment>
                 {users.map((User)=>(
@@ -63,6 +64,8 @@ class Users extends Component{
                       No User Found.....
                    </h2>)
                 ))}
+
+                   {errorMessage ? <h1>{errorMessage}</h1> : null}
             </Fragment>
         )
     }

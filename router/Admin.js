@@ -26,7 +26,7 @@ const signToken = (userID) => {
 };
 
 
-adminRouter.post('/adminRegister', (req,res) => {
+adminRouter.post('/adminRegister', (req, res) => {
 try {
   const { username, matric, password, email, role } = req.body;
   const validationResult = registerSchema.validate(req.body, {
@@ -75,16 +75,16 @@ try {
         });
       })
       .catch(() => {
-        return res.status(500).json({
+    return res.status(500).json({
           message: {
             msgBody: "Something Went Wrong",
             msgError: true,
           },
-        });
+        }); 
       });
   }
   }).catch(()=>{
-    return res.status(500).json({
+  return res.status(500).json({
       message: {
         msgBody: "Something Went Wrong",
         msgError: true,
@@ -92,7 +92,7 @@ try {
     });
   })
 } catch (error) {
-  return res.status(500).json({
+ return res.status(500).json({
     message: {
       msgBody: "Something Went Wrong",
       msgError: true,
@@ -106,7 +106,8 @@ adminRouter.post( "/adminLogin",
 passport.authenticate("local-admin", {
     session: false,
   }),
-  (req, res, next) => {
+  (req, res) => {
+   try {
     const { matric } = req.body;
     const validationResult = loginSchema.validate(req.body, {
       abortEarly: false,
@@ -149,6 +150,14 @@ passport.authenticate("local-admin", {
           isAuthenticated: false,
         });
       }
+   } catch (error) {
+  return res.status(500).json({
+      message: {
+        msgBody: "Something Went Wrong",
+        msgError: true,
+      },
+    });
+   }
   }
 );
 
@@ -157,7 +166,7 @@ adminRouter.get(
   passport.authenticate("local-adminJwt", {
     session: false,
   }),
-  (req, res, next) => {
+  (req, res) => {
     try {
       const { matric, role } = req.user;
       res.status(200).json({
@@ -168,7 +177,7 @@ adminRouter.get(
         },
       });
     } catch (error) {
-      res.status(500).json({
+       res.status(500).json({
         message: {
           msgBody: "Something Went Wrong",
           msgError: true,
@@ -183,7 +192,7 @@ adminRouter.get(
   passport.authenticate("local-adminJwt", {
     session: false,
   }),
-  (req, res, next) => {
+  (req, res) => {
     try {
       if (req.user.role === "admin") {
         res.status(200).json({
@@ -200,7 +209,7 @@ adminRouter.get(
         },
       });
     } catch (error) {
-      res.status(500).json({
+     res.status(500).json({
         message: {
           msgBody: "Something Went Wrong",
           msgError: true,
@@ -213,7 +222,7 @@ adminRouter.get(
 //To delete user from database
 adminRouter.delete('/deleteUser/:id', passport.authenticate("local-adminJwt", {
   session: false,
-}), async (req, res, next) => {
+}), async (req, res) => {
   try {
      const _id = req.params.id;
      const deletedUser =await User.deleteOne({_id}).exec();
@@ -224,7 +233,7 @@ adminRouter.delete('/deleteUser/:id', passport.authenticate("local-adminJwt", {
         res.status(200).json( `User With ID ${_id} Was Successfully Deleted`);
      }
   } catch (error) {
-   res.status(500).json({'Error': "Something Went Wrong"});
+    res.status(500).json({'Error': "Something Went Wrong"});
    } 
     }) 
 
@@ -232,7 +241,7 @@ adminRouter.delete('/deleteUser/:id', passport.authenticate("local-adminJwt", {
 //To delete user statistics from database
 adminRouter.delete('/deleteUserStat/:id', passport.authenticate("local-adminJwt", {
   session: false,
-}), async (req, res, next) => {
+}), async (req, res) => {
   try {
      const _id = req.params.id;
      const deletedUserStat =await Quiz_Statistics.deleteOne({_id}).exec();
@@ -243,7 +252,7 @@ adminRouter.delete('/deleteUserStat/:id', passport.authenticate("local-adminJwt"
         res.status(200).json( `Quiz Statistics With ID ${_id} Was Successfully Deleted`);
      }
   } catch (error) {
-   res.status(500).json({'Error': "Something Went Wrong"});
+  res.status(500).json({'Error': "Something Went Wrong"}); 
    } 
     }) 
 
@@ -251,12 +260,12 @@ adminRouter.delete('/deleteUserStat/:id', passport.authenticate("local-adminJwt"
 
 adminRouter.get('/allUsers', passport.authenticate("local-adminJwt", {
   session: false,
-}), async(req, res, next)=>{
+}), async(req, res)=>{
   try {
     const allUsers = await User.find().sort({matric : 1});
      return res.status(200).json(allUsers);
 } catch (error) {
- return res.status(500).json('Something went wrong');
+return res.status(500).json('Something went wrong');
   }
      });
 
@@ -266,7 +275,7 @@ adminRouter.get('/allUsers', passport.authenticate("local-adminJwt", {
       passport.authenticate("local-adminJwt", {
         session: false,
       }),
-      (req, res, next) => {
+      (req, res) => {
         try {
           res.clearCookie("access_token");
           res.json({
@@ -278,7 +287,7 @@ adminRouter.get('/allUsers', passport.authenticate("local-adminJwt", {
             success: true,
           });
         } catch (error) {
-          res.status(500).json({
+       res.status(500).json({
             message: {
               msgBody: "Something Went Wrong",
               msgError: true,
@@ -291,19 +300,19 @@ adminRouter.get('/allUsers', passport.authenticate("local-adminJwt", {
 //Get quiz statistics
  adminRouter.get('/playerStat', passport.authenticate("local-adminJwt", {
   session: false,
-}), async(req, res, next)=>{
+}), async(req, res)=>{
   try {
     const allStat = await Quiz_Statistics.find().sort({score: 1, date: 1});
      return res.status(200).json(allStat);
 } catch (error) {
- return res.status(500).json('Something went wrong');
+   return res.status(500).json('Something went wrong');
   }
      }); 
 
 //Get logged in user
      adminRouter.get('/loggedIn', passport.authenticate("local-adminJwt", {
       session: false,
-    }),async(req,res, next)=>{
+    }),async(req,res)=>{
      try {
       const user = await User.findById(req.user._id).select('-password');
       if(user){
@@ -312,81 +321,81 @@ adminRouter.get('/allUsers', passport.authenticate("local-adminJwt", {
         res.send('No user is logged in');
       }
      } catch (error) {
-       res.status(500).json("Something happned");
+    res.status(500).json("Something happned");
      }
     }) 
 
   
     adminRouter.put('/forgot', (req, res) => {
-      const { email } = req.body;
+        const { email } = req.body;
     
-      Admin.findOne({ email }, (err, user) => {
-          if (err || !user) {
-              return res.status(400).json({
-                  message: {
-                    msgBody: 'Admin with that email does not exist',
-                    msgError: true,
-                  }
-              });
-          }
-
-          const token = JWT.sign({ _id: user._id }, process.env.SECRETEkEY, { expiresIn: '30m' });
-    
-          const emailData = {
-              from: /* process.env.EMAIL*/ `no-reply@nimelssaQuiz.com`,
-              to: email,
-              subject: `Admin Password Reset link`,
-              html: `
-              <div>
-                <h1>Please use the following link to reset your password</h1>
-                <p>${process.env.CLIENT_URL}/adminReset/${token}</p>
-                <hr />
-                <p>This email may contain sensetive information</p>
-                <p>${process.env.CLIENT_URL}</p>
-              </div>
-              `
-          };
-    
-          return user.updateOne({ resetPasswordLink: token }, (err, success) => {
-              if (err) {
-                  console.log('RESET PASSWORD LINK ERROR', err);
-                  return res.status(400).json({
-                     message: {
-                      msgBody: 'Database connection error on Admin password forgot request',
+        Admin.findOne({ email }, (err, user) => {
+            if (err || !user) {
+                return res.status(400).json({
+                    message: {
+                      msgBody: 'Admin with that email does not exist',
                       msgError: true,
                     }
-                  });
-              } else {
-                const transporter = nodemailer.createTransport({
-                  service: "gmail",
-                  auth: {
-                    user: process.env.EMAIL,
-                    pass: process.env.PASSWORD,
-                  },
                 });
-        
-                  transporter
-                      .sendMail(emailData)
-                      .then(sent => {
-                          // console.log('SIGNUP EMAIL SENT', sent)
-                          return res.status(200).json({ 
-                              message: {
-                                msgBody: `Email has been sent to ${email}. Follow the instruction to activate your account` ,
-                                msgError: false,
-                              }
-                          });
-                      })
-                      .catch(err => {
-                          return res.status(500).json({
-                              message: {
-                                msgBody: "Something went wrong while sending Email" ,
-                                msgError: true,
-                              }
-                          });
-                      });
-              }
-          });
-      });
+            }
+  
+            const token = JWT.sign({ _id: user._id }, process.env.SECRETEkEY, { expiresIn: '30m' });
+      
+            const emailData = {
+                from: /* process.env.EMAIL*/ `no-reply@nimelssaQuiz.com`,
+                to: email,
+                subject: `Admin Password Reset link`,
+                html: `
+                <div>
+                  <h1>Please use the following link to reset your password</h1>
+                  <p>${process.env.CLIENT_URL}/adminReset/${token}</p>
+                  <hr />
+                  <p>This email may contain sensetive information</p>
+                  <p>${process.env.CLIENT_URL}</p>
+                </div>
+                `
+            };
+      
+            return user.updateOne({ resetPasswordLink: token }, (err, success) => {
+                if (err) {
+                    console.log('RESET PASSWORD LINK ERROR', err);
+                    return res.status(400).json({
+                       message: {
+                        msgBody: 'Database connection error on Admin password forgot request',
+                        msgError: true,
+                      }
+                    });
+                } else {
+                  const transporter = nodemailer.createTransport({
+                    service: "gmail",
+                    auth: {
+                      user: process.env.EMAIL,
+                      pass: process.env.PASSWORD,
+                    },
+                  });
+          
+                    transporter
+                        .sendMail(emailData)
+                        .then(sent => {
+                            // console.log('SIGNUP EMAIL SENT', sent)
+                            return res.status(200).json({ 
+                                message: {
+                                  msgBody: `Email has been sent to ${email}. Follow the instruction to activate your account` ,
+                                  msgError: false,
+                                }
+                            });
+                        })
+                        .catch(error => {
+                       return res.status(500).json({
+                                message: {
+                                  msgBody: "Something went wrong while sending Email" ,
+                                  msgError: true,
+                                }
+                            });
+                        });
+                }
+            });
+        });
     })
     
 

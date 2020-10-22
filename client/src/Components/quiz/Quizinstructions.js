@@ -35,6 +35,7 @@ const QuizInstructions = () => (
         <li>The timer starts as soon as the quiz questions loads</li>   
         <li>You will be required to enter your matric number at the end of the quiz exercise</li>
          <li>Avoid refreshing your browser as this may result to restarting of the quiz</li>
+         <li>Avoid taking the Quiz twice, this will result in cancellation of quiz scores</li>
         <li>Lets do this if you think you have got what it takes</li>
     </ul>
     <div>

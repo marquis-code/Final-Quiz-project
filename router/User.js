@@ -76,28 +76,28 @@ userRouter.post("/register", (req, res) => {
             .catch(() => {
               return res.status(500).json({
                 message: {
-                  msgBody: "Something Went Wrong",
+                  msgBody: "Something went wrong" ,
                   msgError: true,
-                },
-              });
+                }
+            });
             });
         }
       })
       .catch(() => {
-        res.status(500).json({
+        return res.status(500).json({
           message: {
-            msgBody: "Something Went Wrong",
+            msgBody: "Something went wrong" ,
             msgError: true,
-          },
-        });
+          }
+      });
       });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       message: {
-        msgBody: "Something Went Wrong",
+        msgBody: "Something went wrong" ,
         msgError: true,
-      },
-    });
+      }
+  });
   }
 });
 
@@ -107,7 +107,7 @@ userRouter.post(
   passport.authenticate("local-user", {
     session: false,
   }),
-  (req, res, next) => {
+  (req, res) => {
     try {
       const { matric } = req.body;
       const validationResult = loginSchema.validate(req.body, {
@@ -154,12 +154,12 @@ userRouter.post(
         });
       }
     } catch (error) {
-      res.status(500).json({
+      return res.status(500).json({
         message: {
-          msgBody: "Something Went Wrong",
+          msgBody: "Something went wrong" ,
           msgError: true,
-        },
-      });
+        }
+    });
     }
   }
 );
@@ -169,11 +169,11 @@ userRouter.get(
   passport.authenticate("local-userJwt", {
     session: false,
   }),
-  (req, res, next) => {
+  (req, res) => {
     try {
       res.clearCookie("access_token");
       res.json({
-        msgBody: "You are sucessfully Loged out",
+        msgBody: "You are sucessfully Logged out",
         user: {
           matric: "",
           role: "",
@@ -181,54 +181,24 @@ userRouter.get(
         success: true,
       });
     } catch (error) {
-      res.status(500).json({
+      return res.status(500).json({
         message: {
-          msgBody: "Something Went Wrong",
+          msgBody: "Something went wrong" ,
           msgError: true,
-        },
-      });
+        }
+    });
     }
   }
 );
 
-userRouter.get(
-  "/admin",
-  passport.authenticate("local-userJwt", {
-    session: false,
-  }),
-  (req, res, next) => {
-    try {
-      if (req.user.role === "admin") {
-        res.status(200).json({
-          message: {
-            msgBody: "Welcome to the Admin Page",
-            msgError: false,
-          },
-        });
-      }
-      return res.status(403).json({
-        message: {
-          msgBody: "You're not authorized to access the admin page",
-          msgError: true,
-        },
-      });
-    } catch (error) {
-      res.status(500).json({
-        message: {
-          msgBody: "Something Went Wrong",
-          msgError: true,
-        },
-      });
-    }
-  }
-);
 
-userRouter.get(
+
+ userRouter.get(
   "/authenticated",
   passport.authenticate("local-userJwt", {
     session: false,
   }),
-  (req, res, next) => {
+  (req, res) => {
     try {
       const { matric, role } = req.user;
       res.status(200).json({
@@ -239,12 +209,12 @@ userRouter.get(
         },
       });
     } catch (error) {
-      res.status(500).json({
+      return res.status(500).json({
         message: {
-          msgBody: "Something Went Wrong",
+          msgBody: "Something went wrong" ,
           msgError: true,
-        },
-      });
+        }
+    });
     }
   }
 );
@@ -254,7 +224,8 @@ userRouter.post(
   passport.authenticate("local-userJwt", {
     session: false,
   }),
-  (req, res, next) => {
+  (req, res) => {
+   try {
     const {
       score,
       numberOfQuestions,
@@ -298,12 +269,12 @@ userRouter.post(
             });
           })
           .catch(() => {
-            res.status(500).json({
+            return res.status(500).json({
               message: {
-                msgBody: "Couldnt save quiz statistics",
+                msgBody: "Something went wrong" ,
                 msgError: true,
-              },
-            });
+              }
+          });
           });
 
         //configuring mail
@@ -337,18 +308,26 @@ userRouter.post(
         transporter
           .sendMail(mailOptions)
           .then((responce) => {
-            res.status(200).json({
+            return res.status(200).json({
               message: {
                 msgBody: "Email sent successfully",
                 msgError: false,
               },
             });
           })
-          .catch((error) => {
-              console.log("Email not sent!!!");
+          .catch(() => {
+           console.log("Email not sent!!!");
           });
       }
     });
+   } catch (error) {
+    return res.status(500).json({
+      message: {
+        msgBody: "Something went wrong" ,
+        msgError: true,
+      }
+  });
+   }
   }
 );
 
@@ -412,14 +391,14 @@ userRouter.put('/forgot', (req, res) => {
                           },
                       });
                   })
-                  .catch(err => {
+                  .catch(error => {
                       // console.log('SIGNUP EMAIL SENT ERROR', err)
                       return res.status(500).json({
                         message: {
-                          msgBody: "Something went wrong while sending Email" ,
+                          msgBody: "Something went wrong" ,
                           msgError: true,
                         }
-                      });
+                    });
                   });
           }
       });
@@ -470,7 +449,7 @@ userRouter.put('/reset', (req, res)=>{
                   }
                   res.status(200).json({
                     message: {
-                      msgBody: `Congratulations Admin! Now you can login with your new password`,
+                      msgBody: `Congratulations! proceed to login with your new password`,
                       msgError: false,
                     }
                   });

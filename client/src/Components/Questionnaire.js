@@ -67,6 +67,7 @@ HandleButtonClick } = props;
         </div>
         <div className="button-container">
          <button 
+          className={classnames('', {'disable': this.state.nextButtonDisabled})}
           onClick={HandleButtonClick}
           id="previous-button">
             Previous

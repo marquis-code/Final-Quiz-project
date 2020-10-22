@@ -26,7 +26,8 @@ class QuizParentComponent extends Component {
       nextButtonDisabled: false,
       previousButtonDisabled: true,
       time: {},
-      matric: ""
+      matric: "",
+      errorMessage: ""
     }; 
     this.interval = null;
     this.wrongSound = React.createRef();
@@ -87,7 +88,7 @@ class QuizParentComponent extends Component {
         this.startTimer();
       })
       .catch(() => {
-        alert("Something Happned");
+        this.setState({errorMessage : "Error retrieving Quiz Data!!!!"})
       });
   }
 
@@ -490,7 +491,8 @@ this.props.history.push('/thanksPage' /* playerStats */);
       fiftyFifty,
       time,
       previousButtonDisabled,
-      nextButtonDisabled 
+      nextButtonDisabled,
+      errorMessage
     } = this.state;
     return (
       <Fragment>
@@ -517,6 +519,8 @@ this.props.history.push('/thanksPage' /* playerStats */);
         ) : (
           <h1>Loading......</h1> 
         )}
+
+        { errorMessage ? <h1>{errorMessage}</h1> : null}
       </Fragment>
     );
   }

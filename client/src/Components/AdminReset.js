@@ -10,8 +10,8 @@ import {faEye} from '@fortawesome/free-solid-svg-icons';
 
 const eye = <FontAwesomeIcon icon={faEye} />;
 
-const AdminReset = ({ match, props}) => {
-    const [passwordShown, setPasswordShown] = useState(false)
+const AdminReset = ({ match }) => {
+  const [passwordShown, setPasswordShown] = useState(false)
   const [user, setUser] = useState({
     username: '',
     token: '',
@@ -22,16 +22,14 @@ const AdminReset = ({ match, props}) => {
   useEffect(() => {
     let token = match.params.token;
     let { username } = JWT.decode(token);
-    // console.log(name);
     if (token) {
         setUser({ ...user, username, token });
     }
-}, []);
+}, []);  //made a change(passed match.prams.token and user to the dependency array)
 
 const togglePasswordVisibility = () => {
     setPasswordShown(passwordShown ? false : true);
   }
-  
 
 const { username, token, newPassword } = user;
 
@@ -48,25 +46,26 @@ const handleChange = event => {
     method: "PUT",
     data: {newPassword, resetPasswordLink: token}
   })
-    .then((responce) => {
+    .then(() => {
       M.toast({ 
-        html: responce.data.message,
-        classes: "tost-valid",
-        displayLength: 1500,
-      })
-      setUser({ ...user});
-      props.history.push("/adminLogin");
+          html:  "Congratulations!!! Proceed to Login with your new password",
+          classes: "tost-valid",
+          displayLength: 3000,
+        }); 
+      setUser({ ...user});              
     })
     .catch(() => {
-        M.toast({ 
-          html: 'RESET PASSWORD ERROR, PLEASE TRY AGAIN ',
-          classes: "tost-invalid",
-          displayLength: 1500,
-        })
+      M.toast({ 
+        html:  "RESET PASSWORD ERROR",
+        classes: "tost-invalid",
+        displayLength: 3000,
+      })
+     /*  console.log('RESET PASSWORD ERROR'); */
         setUser({ ...user });
     });
   };
 
+ /* */
 
   return (
     <Fragment>

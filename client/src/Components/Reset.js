@@ -10,7 +10,7 @@ import {faEye} from '@fortawesome/free-solid-svg-icons';
 
 const eye = <FontAwesomeIcon icon={faEye} />;
 
-const Reset = ({ match, props }) => {
+const Reset = ({ match }) => {
     const [passwordShown, setPasswordShown] = useState(false)
   const [user, setUser] = useState({
     username: '',
@@ -26,7 +26,7 @@ const Reset = ({ match, props }) => {
     if (token) {
         setUser({ ...user, username, token });
     }
-}, []);
+}, []); //added match.prams.token and user to the dependency array
 
 const togglePasswordVisibility = () => {
     setPasswordShown(passwordShown ? false : true);
@@ -49,19 +49,19 @@ const handleChange = event => {
     data: {newPassword, resetPasswordLink: token}
   })
     .then((responce) => {
+      console.log(responce);
       M.toast({ 
-        html: responce.data.message,
+        html: "Congratulations!!! Proceed to Login with your new password",
         classes: "tost-valid",
-        displayLength: 1500,
+        displayLength: 3000,
       })
       setUser({ ...user});
-      props.history.push("/userLogin");
     })
     .catch(() => {
       M.toast({ 
-        html: 'RESET PASSWORD ERROR. PLEASE TRY AGAIN',
+        html:  "RESET PASSWORD ERROR",
         classes: "tost-invalid",
-        displayLength: 1500,
+        displayLength: 3000,
       })
         setUser({ ...user });
     });

@@ -4,7 +4,7 @@ const Quiz = require('../models/Quiz');
 
 
 //Create a new question
-  Quizrouter.post('/questions', async (req, res, next)=>{
+  Quizrouter.post('/questions', async (req, res)=>{
   try {
     const { question,optionA, optionB, optionC, optionD, answer, category } = req.body;
 
@@ -26,18 +26,18 @@ const Quiz = require('../models/Quiz');
  })
 
 // Get All Questions
- Quizrouter.get('/questions', async (req, res, next)=>{
+ Quizrouter.get('/questions', async (req, res)=>{
 try {
     const allQuestions =await Quiz.find().limit(30); //The limit helps to fetch limites amount of data fro MongoDb
     return res.status(200).json(allQuestions);
 } catch (error) {
-  res.status(500).json({'Error': "Something Went Wrong"});
+   res.status(500).json({'Error': "Something Went Wrong"});
 }
   });
 
 //Get one Question
 
-Quizrouter.get('/questions/:id', async(req, res, next) => {
+Quizrouter.get('/questions/:id', async(req, res) => {
   const _id = req.params.id; 
 try {                                                           
    const question = await Quiz.findOne({_id});
@@ -47,15 +47,15 @@ try {
      return res.status(200).json(question);
    } 
 } catch (error) {
-     res.status(500).json({
+    res.status(500).json({
       "Error": "Something went wrong",
       "Error Hint" : "Ensure question ID is correct"
-    });
+    }); 
 }
   });
 
 // Update Question
-Quizrouter.put('/questions/:id', async (req, res, next) => {
+Quizrouter.put('/questions/:id', async (req, res) => {
      try { 
         const { question,optionA, optionB, optionC, optionD, answer, category  } = req.body;
         const _id = req.params.id;
@@ -81,13 +81,13 @@ Quizrouter.put('/questions/:id', async (req, res, next) => {
             return res.status(200).json(questions);
         }
      } catch (error) {
-     return res.status(500).json({'Error': "Something Went Wrong"});
+    return res.status(500).json({'Error': "Something Went Wrong"});
      }
 });
 
 //Delete a Question
 
-Quizrouter.delete('/questions/:id', async (req, res, next) => {
+Quizrouter.delete('/questions/:id', async (req, res) => {
  try {
     const _id = req.params.id;
     const question =await Quiz.deleteOne({_id}).exec();
@@ -98,7 +98,7 @@ Quizrouter.delete('/questions/:id', async (req, res, next) => {
        res.status(200).json( `Question With ID ${_id} Was Successfully Deleted`);
     }
  } catch (error) {
-  res.status(500).json({'Error': "Something Went Wrong"});
+res.status(500).json({'Error': "Something Went Wrong"});
   } 
    })
 module.exports = Quizrouter;

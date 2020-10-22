@@ -7,7 +7,8 @@ let UserSchema = new mongoose.Schema ({
         lowercase: true,
         required:[true, 'Username is required'],
         minlength: [3, 'Username can\'t be smaller than 3 characters'],
-        maxlength: [64, 'Username can\'t be greater than 64 characters' ]
+        maxlength: [64, 'Username can\'t be greater than 64 characters' ],
+        unique:true
     },
     matric:{
         type : Number,
@@ -20,7 +21,8 @@ let UserSchema = new mongoose.Schema ({
         required:[true, 'Password is required'],
         minlength:8,
         maxlength:200,
-        match: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]).{8,12}$/
+        match: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]).{8,12}$/,
+        unique:true
     },
 
     email:{

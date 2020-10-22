@@ -7,7 +7,8 @@ class QuizStat extends Component{
 constructor(props){
     super(props);
     this.state = {
-        stats : []
+        stats : [],
+        errorMessage : ""
      }
 }
 
@@ -18,10 +19,9 @@ getStat(){
     this.setState({
         stats : data
     });
- /*    console.log(this.state.stats); */
 })
 .catch(()=>{
-        alert('Something went wrong when accessing the backend');
+      this.setState({errorMessage : "Error retrieving Quiz Statistics data!!!"});
     });
 }
 
@@ -31,7 +31,7 @@ componentDidMount(){
 
    HandleDeleteStat = (id) =>{
        axios.delete(`/admin/deleteUserStat/${id}`)
-       .then((responce) => {
+       .then(() => {
         M.toast({ 
           html: 'User Statistics was successfully deleted ',
           classes: "tost-valid",
@@ -49,20 +49,21 @@ componentDidMount(){
    }
 
 render(){
-    const {stats} = this.state;
+    const {stats, errorMessage} = this.state;
     return(
       <Fragment>
-                  {stats.map((Stat, index)=>(
+                  {stats.map((Stat, index )=>(
                    stats.length > 0 ? (
-                    <Fragment key={index}>
+                <Fragment key={index}>
                     <QuizStatList CompletedQuizStat={Stat} DeleteUserStat={this.HandleDeleteStat}  /> 
                </Fragment>
                    ) : (
                      <h1>
-                         No Statistics Available...
+                        No Statistics Available... 
                      </h1>
                    )
                 ))} 
+                { errorMessage ? <h1>{errorMessage}</h1> : null }
         </Fragment>
     )
 }

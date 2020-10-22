@@ -9,9 +9,9 @@ const AdminForgot = (props) => {
   const [user, setUser] = useState({
     email: ""
   });
- 
+
   const onChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
+    setUser({ ...user, [e.target.name]: e.target.value }); //pull out everything in the user object and override it with specific input target
   };
 
   const onSubmit = (e) => {
@@ -34,7 +34,11 @@ const AdminForgot = (props) => {
       })
     })
     .catch(() => {
-     console.log('Something went wrong ')
+      M.toast({ 
+        html:  "ERROR SENDING PASSWORD RESET LINK",
+        classes: "tost-invalid",
+        displayLength: 3000,
+      })
     });
   };
 
