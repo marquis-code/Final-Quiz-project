@@ -33,16 +33,16 @@ const AdminLogin = (props) => {
         authContext.setUser(user);
         authContext.setIsAuthenticated(isAuthenticated);
         M.toast({ 
-          html: "Login success",
+          html: "Login Approved",
           classes: "tost-valid",
-          displayLength: 1500,
+          displayLength: 1000,
         })
         props.history.push("/landingPage");
       } else {
         M.toast({ 
-          html: "Invalid Login!!!",
+          html: "Please enter valid login details!!!",
           classes: "tost-invalid",
-          displayLength: 1500,
+          displayLength: 2000,
         })
         setMessage(message);
       }
@@ -92,6 +92,7 @@ const AdminLogin = (props) => {
                     onChange={onChange}
                     className="input100 form-control form-control-lg"
                     placeholder="Enter Password"
+                    required
                   />
                   <i className="passEye" onClick={togglePasswordVisibility}>
                     {eye}

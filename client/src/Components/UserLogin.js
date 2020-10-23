@@ -29,24 +29,26 @@ const UserLogin = (props) => {
     e.preventDefault();
     AuthService.userLogin(user).then((data) => {
       const { isAuthenticated, user, message } = data;
+      setMessage(message);
       if (isAuthenticated) {
         authContext.setUser(user);
         authContext.setIsAuthenticated(isAuthenticated);
         M.toast({ 
-          html: "Login success",
+          html: "Login Approved",
           classes: "tost-valid",
-          displayLength: 1500,
+          displayLength: 1000,
         })
         props.history.push("/play"); 
       } else {
         M.toast({ 
-          html: "Invalid Login!!!",
+          html: "Please enter valid login details!!!",
           classes: "tost-invalid",
-          displayLength: 1500,
-        })
-        setMessage(message);
+          displayLength: 2000,
+        });
       } 
-    });
+    }).catch(() =>{
+      setMessage("Something went wrong");
+    })
   };
 
   return (

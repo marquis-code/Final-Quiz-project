@@ -3,6 +3,7 @@ import AuthService from "../Services/AuthService";
 import Message from "../Components/Message";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
+import M from 'materialize-css';
 import { Button } from "reactstrap";
 import { FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faEye} from '@fortawesome/free-solid-svg-icons';
@@ -48,9 +49,20 @@ const togglePasswordVisibility = () => {
         setMessage(message);
         resetForm();
         if (!message.msgError) {
+          M.toast({ 
+            html: "Account was sucessfully created",
+            classes: "tost-valid",
+            displayLength: 1000,
+          })
           timerID = setTimeout(() => {
             props.history.push("/userLogin");
           }, 1000);
+        }else{
+          M.toast({ 
+            html: "Please enter valid sign up details!!!",
+            classes: "tost-invalid",
+            displayLength: 2000,
+          })
         }
       })
       .catch(() => {

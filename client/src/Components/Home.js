@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import {
   Card,
-  /* CardText, */ CardBody,
+  CardBody,
   CardTitle,
   CardSubtitle,
   Button,
@@ -16,11 +16,10 @@ const Home = () => (
     </Helmet>
     <div className="Home">
       <Card>
-        {/* <img src="/download.png" alt="IMG" /> */}
         <CardBody>
           <CardTitle className="name-design">
             <h1 id="text1" className="cover-heading">
-              Welcome To <span>NIMELSSA</span> Quiz
+              WELCOME TO <span>NIMELSSA</span> QUIZ
             </h1>
           </CardTitle>
           <br />
@@ -32,7 +31,7 @@ const Home = () => (
         </CardBody>
 
         <CardBody>
-          <Button block={true} className="mt-3">
+          <Button block={true} className="mt-3" >
             <span>
               <Link to="/quizInstructions" id="link1">
                 Play
@@ -46,7 +45,7 @@ const Home = () => (
               </Link>
             </span>
           </Button>
-          <Button block={true} className="mt-3">
+          <Button block={true} className="mt-3" >
             <span>
               <Link to="/redirect" id="link3">
                 Login
@@ -58,5 +57,6 @@ const Home = () => (
     </div>
   </Fragment>
 );
+
 
 export default Home;

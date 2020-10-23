@@ -27,7 +27,6 @@ const signToken = (userID) => {
 
 //User registeration
 userRouter.post("/register", (req, res) => {
-  try {
     const { username, matric, password, email, role } = req.body;
     const validationResult = registerSchema.validate(req.body, {
       abortEarly: false,
@@ -91,14 +90,6 @@ userRouter.post("/register", (req, res) => {
           }
       });
       });
-  } catch (error) {
-    return res.status(500).json({
-      message: {
-        msgBody: "Something went wrong" ,
-        msgError: true,
-      }
-  });
-  }
 });
 
 //User Login
@@ -108,7 +99,6 @@ userRouter.post(
     session: false,
   }),
   (req, res) => {
-    try {
       const { matric } = req.body;
       const validationResult = loginSchema.validate(req.body, {
         abortEarly: false,
@@ -141,26 +131,20 @@ userRouter.post(
         });
         res.status(200).json({
           msgBody: "Congratulations You are sucessfuly logged In",
+          msgError: false,
           isAuthenticated: true,
           user: {
             matric,
             role,
-          },
+          }
         });
       } else {
         res.status(400).json({
           msgBody: "Login was not successful",
           isAuthenticated: false,
+          msgError: true,
         });
       }
-    } catch (error) {
-      return res.status(500).json({
-        message: {
-          msgBody: "Something went wrong" ,
-          msgError: true,
-        }
-    });
-    }
   }
 );
 
@@ -170,7 +154,6 @@ userRouter.get(
     session: false,
   }),
   (req, res) => {
-    try {
       res.clearCookie("access_token");
       res.json({
         msgBody: "You are sucessfully Logged out",
@@ -180,14 +163,6 @@ userRouter.get(
         },
         success: true,
       });
-    } catch (error) {
-      return res.status(500).json({
-        message: {
-          msgBody: "Something went wrong" ,
-          msgError: true,
-        }
-    });
-    }
   }
 );
 
@@ -199,7 +174,6 @@ userRouter.get(
     session: false,
   }),
   (req, res) => {
-    try {
       const { matric, role } = req.user;
       res.status(200).json({
         isAuthenticated: true,
@@ -208,14 +182,6 @@ userRouter.get(
           role,
         },
       });
-    } catch (error) {
-      return res.status(500).json({
-        message: {
-          msgBody: "Something went wrong" ,
-          msgError: true,
-        }
-    });
-    }
   }
 );
 
@@ -225,7 +191,6 @@ userRouter.post(
     session: false,
   }),
   (req, res) => {
-   try {
     const {
       score,
       numberOfQuestions,
@@ -280,7 +245,7 @@ userRouter.post(
         //configuring mail
         const mailOptions = {
           from: `no-reply@nimelssaQuiz.com`,
-          to: process.env.EMAIL,
+          to: process.env.EMAIL, // orignalAcademicgroupmail
           subject: "Quiz statistics",
           html: `
     <div>
@@ -299,6 +264,8 @@ userRouter.post(
 
         const transporter = nodemailer.createTransport({
           service: "gmail",
+          secure: false,
+          port: 587,
           auth: {
             user: process.env.EMAIL,
             pass: process.env.PASSWORD,
@@ -307,7 +274,7 @@ userRouter.post(
 
         transporter
           .sendMail(mailOptions)
-          .then((responce) => {
+          .then(() => {
             return res.status(200).json({
               message: {
                 msgBody: "Email sent successfully",
@@ -320,14 +287,6 @@ userRouter.post(
           });
       }
     });
-   } catch (error) {
-    return res.status(500).json({
-      message: {
-        msgBody: "Something went wrong" ,
-        msgError: true,
-      }
-  });
-   }
   }
 );
 
@@ -348,7 +307,7 @@ userRouter.put('/forgot', (req, res) => {
       const token = JWT.sign({ _id: user._id }, process.env.SECRETEkEY, { expiresIn: '30m' });
 
       const emailData = {
-          from:/*process.env.EMAIL */`no-reply@nimelssaQuiz.com`,
+          from:`no-reply@nimelssaQuiz.com`,
           to: email,
           subject: `User Password Reset link`,
           html: `
@@ -374,10 +333,12 @@ userRouter.put('/forgot', (req, res) => {
           } else {
             const transporter = nodemailer.createTransport({
               service: "gmail",
+              secure: false,
+              port: 587,
               auth: {
                 user: process.env.EMAIL,
                 pass: process.env.PASSWORD,
-              },
+              }
             });
     
               transporter
@@ -458,4 +419,30 @@ userRouter.put('/reset', (req, res)=>{
       });
   }
 })
+
+//Get logged in user
+userRouter.get('/loggedIn', passport.authenticate("local-userJwt", {
+  session: false,
+}),async(req,res)=>{
+
+  const user = await User.findById(req.user._id).select('-password');
+  if(user){
+    res.send(user)
+  }else{
+    res.send('No user is logged in');
+  }
+}) 
+
+   userRouter.post('/oneUser', passport.authenticate("local-userJwt", {
+    session: false,
+  }), async(req, res) => {
+   const { matric} = req.body;                                                                                                           
+   const singleUser = await User.findOne({matric}).select('-password');
+   if(!singleUser){
+     return res.status(404).json(`User with  matric ${matric} does not exist`);
+   }else{
+     return res.status(200).json(_.pick(singleUser, ['username', 'matric', 'role']));
+   } 
+    });     
+
 module.exports = userRouter;

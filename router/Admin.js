@@ -27,7 +27,6 @@ const signToken = (userID) => {
 
 
 adminRouter.post('/adminRegister', (req, res) => {
-try {
   const { username, matric, password, email, role } = req.body;
   const validationResult = registerSchema.validate(req.body, {
     abortEarly: false,
@@ -91,15 +90,6 @@ try {
       },
     });
   })
-} catch (error) {
- return res.status(500).json({
-    message: {
-      msgBody: "Something Went Wrong",
-      msgError: true,
-    },
-  });
-}
-
 })
 
 adminRouter.post( "/adminLogin", 
@@ -107,7 +97,6 @@ passport.authenticate("local-admin", {
     session: false,
   }),
   (req, res) => {
-   try {
     const { matric } = req.body;
     const validationResult = loginSchema.validate(req.body, {
       abortEarly: false,
@@ -150,14 +139,6 @@ passport.authenticate("local-admin", {
           isAuthenticated: false,
         });
       }
-   } catch (error) {
-  return res.status(500).json({
-      message: {
-        msgBody: "Something Went Wrong",
-        msgError: true,
-      },
-    });
-   }
   }
 );
 
@@ -167,7 +148,6 @@ adminRouter.get(
     session: false,
   }),
   (req, res) => {
-    try {
       const { matric, role } = req.user;
       res.status(200).json({
         isAuthenticated: true,
@@ -176,14 +156,6 @@ adminRouter.get(
           role,
         },
       });
-    } catch (error) {
-       res.status(500).json({
-        message: {
-          msgBody: "Something Went Wrong",
-          msgError: true,
-        },
-      });
-    }
   }
 );
 
@@ -193,7 +165,6 @@ adminRouter.get(
     session: false,
   }),
   (req, res) => {
-    try {
       if (req.user.role === "admin") {
         res.status(200).json({
           message: {
@@ -208,14 +179,6 @@ adminRouter.get(
           msgError: true,
         },
       });
-    } catch (error) {
-     res.status(500).json({
-        message: {
-          msgBody: "Something Went Wrong",
-          msgError: true,
-        },
-      });
-    }
   }
 );
 
@@ -223,7 +186,6 @@ adminRouter.get(
 adminRouter.delete('/deleteUser/:id', passport.authenticate("local-adminJwt", {
   session: false,
 }), async (req, res) => {
-  try {
      const _id = req.params.id;
      const deletedUser =await User.deleteOne({_id}).exec();
   
@@ -232,9 +194,6 @@ adminRouter.delete('/deleteUser/:id', passport.authenticate("local-adminJwt", {
      }else{
         res.status(200).json( `User With ID ${_id} Was Successfully Deleted`);
      }
-  } catch (error) {
-    res.status(500).json({'Error': "Something Went Wrong"});
-   } 
     }) 
 
 
@@ -242,7 +201,6 @@ adminRouter.delete('/deleteUser/:id', passport.authenticate("local-adminJwt", {
 adminRouter.delete('/deleteUserStat/:id', passport.authenticate("local-adminJwt", {
   session: false,
 }), async (req, res) => {
-  try {
      const _id = req.params.id;
      const deletedUserStat =await Quiz_Statistics.deleteOne({_id}).exec();
   
@@ -251,9 +209,6 @@ adminRouter.delete('/deleteUserStat/:id', passport.authenticate("local-adminJwt"
      }else{
         res.status(200).json( `Quiz Statistics With ID ${_id} Was Successfully Deleted`);
      }
-  } catch (error) {
-  res.status(500).json({'Error': "Something Went Wrong"}); 
-   } 
     }) 
 
 
@@ -261,12 +216,8 @@ adminRouter.delete('/deleteUserStat/:id', passport.authenticate("local-adminJwt"
 adminRouter.get('/allUsers', passport.authenticate("local-adminJwt", {
   session: false,
 }), async(req, res)=>{
-  try {
     const allUsers = await User.find().sort({matric : 1});
      return res.status(200).json(allUsers);
-} catch (error) {
-return res.status(500).json('Something went wrong');
-  }
      });
 
      //Admin Logout
@@ -276,7 +227,6 @@ return res.status(500).json('Something went wrong');
         session: false,
       }),
       (req, res) => {
-        try {
           res.clearCookie("access_token");
           res.json({
             msgBody: "Admin sucessfully Loged out",
@@ -286,14 +236,6 @@ return res.status(500).json('Something went wrong');
             },
             success: true,
           });
-        } catch (error) {
-       res.status(500).json({
-            message: {
-              msgBody: "Something Went Wrong",
-              msgError: true,
-            },
-          });
-        }
       }
     );   
 
@@ -301,31 +243,11 @@ return res.status(500).json('Something went wrong');
  adminRouter.get('/playerStat', passport.authenticate("local-adminJwt", {
   session: false,
 }), async(req, res)=>{
-  try {
+
     const allStat = await Quiz_Statistics.find().sort({score: 1, date: 1});
      return res.status(200).json(allStat);
-} catch (error) {
-   return res.status(500).json('Something went wrong');
-  }
      }); 
 
-//Get logged in user
-     adminRouter.get('/loggedIn', passport.authenticate("local-adminJwt", {
-      session: false,
-    }),async(req,res)=>{
-     try {
-      const user = await User.findById(req.user._id).select('-password');
-      if(user){
-        res.send(user)
-      }else{
-        res.send('No user is logged in');
-      }
-     } catch (error) {
-    res.status(500).json("Something happned");
-     }
-    }) 
-
-  
     adminRouter.put('/forgot', (req, res) => {
         const { email } = req.body;
     
@@ -368,6 +290,8 @@ return res.status(500).json('Something went wrong');
                 } else {
                   const transporter = nodemailer.createTransport({
                     service: "gmail",
+                    secure: false,
+                    port: 587,
                     auth: {
                       user: process.env.EMAIL,
                       pass: process.env.PASSWORD,

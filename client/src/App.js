@@ -26,6 +26,7 @@ import QuizStat from './Components/QuizStat';
 import Thanks from './Components/Thanks';
 import AdminForgot from './Components/AdminForgot';
 import AdminReset from './Components/AdminReset';
+/* import ConfirmMatric from './Components/ConfirmMatric'; */
 
 
 function App() {
@@ -57,6 +58,8 @@ function App() {
        <PrivateRoute exact path="/play"  roles={["user"]} component={QuizParentComponent}/>
    {/*     <PrivateRoute exact path="/quizSummary" roles={["user","admin"]} component={QuizSummary} /> */}
        <PrivateRoute exact path="/thanksPage" roles={["user"]} component={Thanks} />
+       {/* <PrivateRoute exact path="/confirm-matric" roles={["user"]} component={ConfirmMatric} /> */}
+       
    
          {/* Admin Quiz protected Routes only */}
        <PrivateRoute exact path="/landingPage" roles={["admin"]} component={LandingPage}/>

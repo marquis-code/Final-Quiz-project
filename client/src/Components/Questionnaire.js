@@ -1,14 +1,11 @@
 import React, { Fragment } from "react";
 import { Helmet } from "react-helmet";
-
-import correctNotification from '../../src/assets/audio/correct-answer.mp3';
-import wrongNotification from '../../src/assets/audio/wrong-answer.mp3';
-import buttonNotification from '../../src/assets/audio/button-sound.mp3';
+import classnames from 'classnames';
 
 const Questionnaire = (props) => {
 const 
 {CurrentQuestion,
-HandleOptionClick, 
+HandleOptionClick,
 CurrentQuestionIndex, 
 NumberOfQuestions,
 Hints,
@@ -16,11 +13,8 @@ FiftyFifty,
 HandleHints,
 HandleFiftyFifty,
 Time,
-HandleButtonClick } = props;
-/* const {Questions : {question, optionA, optionB, optionC, optionD}} = props */
-
-/* const {Questions : [{question, optionA, optionB, optionC, optionD}]} = props */
-
+HandleButtonClick
+} = props;
 
 
   return (
@@ -28,11 +22,6 @@ HandleButtonClick } = props;
       <Helmet>
         <title>Nimelssa - Quiz page</title>
       </Helmet>
-      <Fragment>
-       <audio id="correct-sound" src={correctNotification} />
-        <audio id="wrong-sound" src={wrongNotification} />
-        <audio id="button-sound" src={buttonNotification} />        
-      </Fragment>
      <div className="questions">
         <h2>Quiz Mode</h2>
         <div className="lifeline-container">
@@ -58,8 +47,8 @@ HandleButtonClick } = props;
         </div> 
         <h5>{CurrentQuestion.question}</h5>
         <div className="options-container">
-          <p onClick={HandleOptionClick} className="option">{CurrentQuestion.optionA}</p>
-          <p onClick={HandleOptionClick} className="option">{CurrentQuestion.optionB}</p>
+          <p onClick={HandleOptionClick}  className="option">{CurrentQuestion.optionA}</p>
+          <p  onClick={HandleOptionClick} className="option">{CurrentQuestion.optionB}</p>
         </div>
         <div className="options-container">
           <p onClick={HandleOptionClick} className="option">{CurrentQuestion.optionC}</p>
@@ -67,13 +56,14 @@ HandleButtonClick } = props;
         </div>
         <div className="button-container">
          <button 
-          className={classnames('', {'disable': this.state.nextButtonDisabled})}
+           className={classnames('disable')}
           onClick={HandleButtonClick}
           id="previous-button">
             Previous
           </button>
  
           <button 
+       className={classnames('disable')}
           onClick={HandleButtonClick}
           id="next-button">
             Next
@@ -91,5 +81,3 @@ HandleButtonClick } = props;
 }
 
 export default Questionnaire;
-
-//Child component

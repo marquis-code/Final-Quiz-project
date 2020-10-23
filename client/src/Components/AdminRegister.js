@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { Button } from "reactstrap";
 import { FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faEye} from '@fortawesome/free-solid-svg-icons';
+import M from 'materialize-css'
 
 const eye = <FontAwesomeIcon icon={faEye} />;
 const AdminRegister = (props) => {
@@ -47,9 +48,20 @@ const AdminRegister = (props) => {
         setMessage(message);
         resetForm();
         if (!message.msgError) {
+          M.toast({ 
+            html: "Account was sucessfully created",
+            classes: "tost-valid",
+            displayLength: 1000,
+          })
           timerID = setTimeout(() => {
             props.history.push("/adminLogin");
           }, 1000);
+        }else{
+          M.toast({ 
+            html: "Please enter valid sign up details!!!",
+            classes: "tost-invalid",
+            displayLength: 2000,
+          })
         }
       })
       .catch(() => {

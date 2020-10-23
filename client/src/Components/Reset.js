@@ -88,7 +88,7 @@ const handleChange = event => {
                 <input
                     onChange={handleChange}
                     value={newPassword}
-                    type="password"
+                    type={passwordShown ? "text" : "password"}
                     className="input100 form-control form-control-lg"
                     placeholder="Type new password"
                     required
@@ -96,6 +96,7 @@ const handleChange = event => {
                 <i className="passEye" onClick={togglePasswordVisibility}>{eye}</i>
                  <span className="focus-input100"></span>
                   <label htmlFor="password" className="sr-only">
+                  {" "}
                     Password:{" "}
                   </label>
             </div>

@@ -23,15 +23,11 @@ class QuizParentComponent extends Component {
       fiftyFifty: 2,
       previousRandomNumbers: [],
       usedFiftyFifty: false,
-      nextButtonDisabled: false,
-      previousButtonDisabled: true,
       time: {},
-      matric: "",
-      errorMessage: ""
+     matric: "",
+      errorMessage: "",
     }; 
-    this.interval = null;
-    this.wrongSound = React.createRef();
-    this.correctSound = React.createRef();
+    this.interval = null
   }
 
   displayQuestions = (
@@ -58,7 +54,6 @@ class QuizParentComponent extends Component {
         },
         () => {
           this.showOptions();
-          this.handleDisableButton();
         }
       );
     }
@@ -97,18 +92,12 @@ class QuizParentComponent extends Component {
 }
 
  
-  handleOptionClick = (event) => {
+   handleOptionClick = (event) => {
     if (
       event.target.innerHTML.toLowerCase() === this.state.answer.toLowerCase()
     ) {
-      setTimeout(() =>{
-        document.getElementById('correct-sound').play();
-      }, 500)
       this.correctAnswer();
     } else {
-      setTimeout(() =>{
-        document.getElementById('wrong-sound').play();
-      }, 500)
       this.wrongAnswer();
     }
   };
@@ -131,13 +120,8 @@ class QuizParentComponent extends Component {
             break;
     }
 }
- 
-  playButtonSound = () => {
-    document.getElementById('button-sound').play();
-  }
 
   handleNextButtonClick = () => {
-    this.playButtonSound();
     const { nextQuestion } = this.state;
     if (nextQuestion !== undefined) {
       this.setState(
@@ -169,7 +153,6 @@ class QuizParentComponent extends Component {
   };
 
   handlePreviousButtonClick = () => {
-    this.playButtonSound();
     const { previousQuestion } = this.state;
     if (previousQuestion !== undefined) {
       this.setState(
@@ -201,7 +184,6 @@ class QuizParentComponent extends Component {
   };
 
   handleExitButtonClick = () => {
-    this.playButtonSound();
     const quitConfirmation = window.confirm("Are you sure you want to quit?");
     if (quitConfirmation === true) {
       this.props.history.push("/");
@@ -212,7 +194,7 @@ class QuizParentComponent extends Component {
     M.toast({
       html: "Correct",
       classes: "tost-valid",
-      displayLength: 1500,
+      displayLength: 1000,
     });
     this.setState(
       (prevState) => ({
@@ -247,7 +229,7 @@ class QuizParentComponent extends Component {
     M.toast({
       html: "Wrong Answer",
       classes: "tost-invalid",
-      displayLength: 1500,
+      displayLength: 1000,
     });
     this.setState(
       (prevState) => ({
@@ -412,75 +394,44 @@ class QuizParentComponent extends Component {
     }, 1000);
   };
 
-  handleDisableButton = () => {
-    if (
-      this.state.previousQuestion === undefined ||
-      this.state.currentQuestionIndex === 0
-    ) {
-      this.setState({
-        previousButtonDisabled: true,
-      });
-    } else { 
-      this.setState({
-        previousButtonDisabled: false,
-      });
-    }
-
-    if (
-      this.state.nextQuestion === undefined ||
-      this.state.currentQuestionIndex + 1 === this.state.numberOfQuestions
-    ) {
-      this.setState({
-        nextButtonDisabled: true,
-      });
-    } else {
-      this.setState({
-        nextButtonDisabled: false,
-      });
-    }
-  };
-
   endGame = () => {
-  const matricInput = window.prompt('Enter Your Matric Number to Confirm Submission');
-  if(matricInput.toString().length !== 9 || matricInput.toString().length === ""){
-       alert('Please Enter a valid Matric Number');
-  }else{
-    M.toast({
-      html: "Quiz has ended",
-      classes: "tost-invalid",
-      displayLength: 1500
-  })
-    alert("Quiz has ended");
-  }
-    const { state } = this;
-    const playerStats = {
-        score: state.score,
-        numberOfQuestions: state.numberOfQuestions,
-        numberOfAnsweredQuestions: state.correctAnswers + state.wrongAnswers,
-        correctAnswers: state.correctAnswers,
-        wrongAnswers: state.wrongAnswers,
-        fiftyFiftyUsed: 2 - state.fiftyFifty,
-        hintsUsed: 5 - state.hints,
-        matric: matricInput
-    };
-   
-   axios({
-      url: "/user/quizStat",
-      method: "POST",
-      data: playerStats, 
-    })
-      .then(() => {
-        console.log("Quiz statistics was sent sucessfully");
-      })
-      .catch(() => {
-        console.log("Something went Wrong");
-      });
+   const matricInput = window.prompt('Please Enter your Matric Number to Confirm Submission');
+    if(matricInput.toString().length !== 9 || matricInput.toString().length === ""){
+      alert('Invalid Matric number');
+    }else{
+      const { state } = this;
+      const playerStats = {
+          score: state.score,
+          numberOfQuestions: state.numberOfQuestions,
+          numberOfAnsweredQuestions: state.correctAnswers + state.wrongAnswers,
+          correctAnswers: state.correctAnswers,
+          wrongAnswers: state.wrongAnswers,
+          fiftyFiftyUsed: 2 - state.fiftyFifty,
+          hintsUsed: 5 - state.hints,
+          matric: matricInput
+      };
 
-// Redirect user to a thank you page
-    setTimeout(() => {
-this.props.history.push('/thanksPage' /* playerStats */);
-    }, 1000);
+      axios({
+        url: "/user/quizStat",
+        method: "POST",
+        data: playerStats, 
+      })
+        .then(() => {
+          M.toast({
+            html: "Quiz data was sucessfully submitted",
+            classes: "tost-valid",
+            displayLength: 1000 
+          })})
+         .catch(() => {
+          console.log("Something went Wrong");
+        });
+        setTimeout(() => {
+          this.props.history.push('/thanksPage');
+              }, 1000);
+    } 
 };
+
+
   render() {
     const {
       questions,
@@ -490,8 +441,8 @@ this.props.history.push('/thanksPage' /* playerStats */);
       hints,
       fiftyFifty,
       time,
-      previousButtonDisabled,
-      nextButtonDisabled,
+      previousQuestion,
+      nextQuestion,
       errorMessage
     } = this.state;
     return (
@@ -499,8 +450,8 @@ this.props.history.push('/thanksPage' /* playerStats */);
         {questions.length > 0 ? (
           <Fragment> 
             <Questionnaire
-              NextButtonDisabled={nextButtonDisabled}
-              PreviousButtonDisabled={previousButtonDisabled}
+              PreviousQuestion={previousQuestion}
+              NextQuestion={nextQuestion}
               Time={time}
               FiftyFifty={fiftyFifty}
               Hints={hints}
@@ -527,5 +478,3 @@ this.props.history.push('/thanksPage' /* playerStats */);
 }
 
 export default QuizParentComponent;
-
-//Parent component
