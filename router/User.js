@@ -35,7 +35,7 @@ userRouter.post("/register", (req, res) => {
       return res.status(400).json({
         message: {
           msgBody:
-            "Registeration Failed !!! Please Enter All Fields information Correctly.",
+            "OopsRegisteration Failed !!! Please Enter All Fields information Correctly.",
           msgError: true,
         },
       });
@@ -55,7 +55,7 @@ userRouter.post("/register", (req, res) => {
         if (user) {
           return res.status(400).json({
             message: {
-              msgBody: "Sorry!! User Already Exist",
+              msgBody: "Oops!! User Already Exist",
               msgError: true,
             },
           });
@@ -107,7 +107,7 @@ userRouter.post(
         return res.status(400).json({
           message: {
             msgBody:
-              "Login Failed!! Please Enter All Fields information Correctly.",
+              "Oops Login Failed!! Please Enter All Fields information Correctly.",
             msgError: true,
           },
         });
@@ -283,7 +283,7 @@ userRouter.post(
             });
           })
           .catch(() => {
-           console.log("Email not sent!!!");
+           console.log("Oops Email not sent!!!");
           });
       }
     });
@@ -376,7 +376,7 @@ userRouter.put('/reset', (req, res)=>{
           if (err) {
               return res.status(400).json({
                 message: {
-                  msgBody: "Expired link. Try again" ,
+                  msgBody: "Oops Expired link. Try again" ,
                   msgError: true,
                 }
               });
@@ -403,7 +403,7 @@ userRouter.put('/reset', (req, res)=>{
                   if (err) {
                       return res.status(400).json({
                         message: {
-                          msgBody: "Error resetting user password" ,
+                          msgBody: "Oops Error resetting user password" ,
                           msgError: true,
                         }
                       });

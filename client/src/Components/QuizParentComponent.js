@@ -1,5 +1,7 @@
-import React, { Component, Fragment } from "react";
+import React, {Fragment, Component } from "react";
 import axios from "axios";
+import {confirmAlert} from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import Questionnaire from "./Questionnaire";
 import isEmpty from "../utils/is-Empty";
 import M from "materialize-css";
@@ -24,11 +26,32 @@ class QuizParentComponent extends Component {
       previousRandomNumbers: [],
       usedFiftyFifty: false,
       time: {},
-     matric: "",
-      errorMessage: "",
+      matric: "",
+      errorMessage: ""
     }; 
     this.interval = null
   }
+
+  handleExitButtonClick = () => {
+    this.submit();
+  };
+
+  submit = () => {
+    confirmAlert({
+      title: 'Are you sure you want to do this?',
+      message: 'Please note that quiz data will be lost..',
+      buttons: [
+        {
+          label: 'Confirm',
+          onClick: () => {this.props.history.push("/")}
+        },
+        {
+          label: 'Cancel',
+          onClick: () => this.props.history.push("/play")
+        }
+      ]
+    });
+  };
 
   displayQuestions = (
     questions = this.state.questions,
@@ -180,13 +203,6 @@ class QuizParentComponent extends Component {
         classes: "tost-valid",
         displayLength: 1000,
       })
-    }
-  };
-
-  handleExitButtonClick = () => {
-    const quitConfirmation = window.confirm("Are you sure you want to quit?");
-    if (quitConfirmation === true) {
-      this.props.history.push("/");
     }
   };
 
@@ -395,8 +411,8 @@ class QuizParentComponent extends Component {
   };
 
   endGame = () => {
-   const matricInput = window.prompt('Please Enter your Matric Number to Confirm Submission');
-    if(matricInput.toString().length !== 9 || matricInput.toString().length === ""){
+    let matricInput = window.prompt('Please Enter your Matric Number to Confirm Submission');
+    if(matricInput.toString().length !== 9 || !matricInput){
       alert('Invalid Matric number');
     }else{
       const { state } = this;
@@ -422,15 +438,14 @@ class QuizParentComponent extends Component {
             classes: "tost-valid",
             displayLength: 1000 
           })})
-         .catch(() => {
+         .catch(() => { 
           console.log("Something went Wrong");
         });
         setTimeout(() => {
           this.props.history.push('/thanksPage');
               }, 1000);
-    } 
-};
-
+    }  
+}; 
 
   render() {
     const {

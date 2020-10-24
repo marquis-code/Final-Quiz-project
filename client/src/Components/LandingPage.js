@@ -32,8 +32,7 @@ class LandingPage extends Component {
   onDelete = (id) => {
     axios
       .delete(`/quiz/questions/${id}`)
-      .then((responce) => {
-   /*      alert("Question Was Sucessfully Deleted"); */
+      .then(() => {
         M.toast({ 
           html: "Question was successfully deleted",
           classes: "tost-valid",
@@ -42,7 +41,6 @@ class LandingPage extends Component {
         this.getQuiz();
       })
       .catch(() => {
-      /*   alert("Something Happned"); */
         M.toast({ 
           html: "!!! Something went wrong when fetching quiz questions ",
           classes: "tost-invalid",
@@ -123,7 +121,6 @@ class LandingPage extends Component {
           <button className="btn btn-success mt-3" style={{float:"left"}}>
             <Link to="/quizStat"><span>View Quiz Statistics</span></Link>
           </button> 
-     {/*     <hr/> */}
         </div>
       </Fragment>
     );

@@ -49,20 +49,30 @@ body:hover {
   background-color: $error-text !important;
   border-radius: 5px !important;
   color: $offwhite !important;
+  min-width: 10% !important;
+  top: 2rem !important;
+  right: 50% !important;
+  position: fixed !important;
+  transform: translateX(50%) translateY(50%) !important;
 }
 
 .tost-valid {
   background-color: $success-text !important;
   border-radius: 5px !important;
   color: $offwhite !important;
+  min-width: 10% !important;
+  top: 2rem !important;
+  right: 50% !important;
+  position: fixed !important;
+  transform: translateX(50%) translateY(50%) !important;
 }
 
- .disable {
+.disable {
   background-color: #ccc !important;
   box-shadow: none !important;
   opacity: 0.9 !important;
   pointer-events: none;
-} 
+}
 
 .mt-3 {
   display: inline-block;
@@ -104,4 +114,13 @@ body:hover {
 .mt-3:hover span:after {
   opacity: 1;
   right: 0;
+}
+
+.loader {
+  color: brown;
+  vertical-align: middle;
+  justify-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

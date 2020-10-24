@@ -25,6 +25,7 @@ const UserLogin = (props) => {
     setPasswordShown(passwordShown ? false : true);
   }
 
+  let tostHtml = '<span>PLEASE ENTER VALID LOGIN DETAILS !!!</span>'
   const onSubmit = (e) => {
     e.preventDefault();
     AuthService.userLogin(user).then((data) => {
@@ -41,9 +42,9 @@ const UserLogin = (props) => {
         props.history.push("/play"); 
       } else {
         M.toast({ 
-          html: "Please enter valid login details!!!",
+          html: tostHtml,
           classes: "tost-invalid",
-          displayLength: 2000,
+          displayLength: 2000
         });
       } 
     }).catch(() =>{

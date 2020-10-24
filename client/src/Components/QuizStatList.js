@@ -1,12 +1,15 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Moment from "react-moment";
 import { Link } from "react-router-dom";
+import Loader from 'react-loader-spinner';
 
 function QuizStatList(props) {
   const { CompletedQuizStat, DeleteUserStat } = props;
-  return (
-    <Fragment>
+  const [isLoading, setIsLoading] = useState(true);
+  const quizStatListPage = () => {
+    return(
+      <Fragment>
       <Helmet>
         <title>Nimelssa Quiz-Users Quiz-statistics</title>
       </Helmet>
@@ -16,7 +19,6 @@ function QuizStatList(props) {
             <tr>
               <th scope="col">Matric</th>
               <th scope="col">Score</th>
-              {/*        <th scope="col">Number of Questions</th> */}
               <th scope="col">Questions Answered</th>
               <th scope="col">Correct Answers</th>
               <th scope="col">Wrong Answers</th>
@@ -31,7 +33,6 @@ function QuizStatList(props) {
             <tr>
               <td>{CompletedQuizStat.matric}</td>
               <td>{CompletedQuizStat.score}</td>
-              {/*    <td>{CompletedQuizStat.numberOfQuestions}</td> */}
               <td>{CompletedQuizStat.numberOfAnsweredQuestions}</td>
               <td>{CompletedQuizStat.numberOfAnsweredQuestions}</td>
               <td>{CompletedQuizStat.correctAnswers}</td>
@@ -62,7 +63,20 @@ function QuizStatList(props) {
         </table>
       </div>
     </Fragment>
-  );
+    )
+  }
+
+  useEffect(()=> {
+  let interval = setTimeout(()=> {setIsLoading(false)}, 2000);
+  return () => {
+    if(interval){
+      clearInterval(interval);
+      interval = 0;
+    }
+  }
+  }, [])
+
+  return isLoading ? <Loader className="loader" type="ThreeDots" color="00BFFF" height={100} width={100}/> : quizStatListPage();
 }
 
 export default QuizStatList;
