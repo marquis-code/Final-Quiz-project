@@ -33,12 +33,13 @@ class App extends Component{
   constructor(props){
     super(props);
     this.state = {
-      isLoading : true
+      isLoading : true,
+      confirmOpen : true
     }
   }
 
   componentDidMount(){
-    this.timerHandle = setTimeout(() => this.setState({isLoading : false}), 4000);
+    this.timerHandle = setTimeout(() => this.setState({isLoading : false}), 2500);
   }
 
   componentWillUnmount(){

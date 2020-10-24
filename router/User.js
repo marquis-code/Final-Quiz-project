@@ -9,7 +9,8 @@ const { registerSchema } = require("../models/validations/authValidation");
 const { loginSchema } = require("../models/validations/loginValidation");
 const { Passport } = require("passport");
 const nodemailer = require("nodemailer");
-const _ = require('lodash')
+const nodemailerMailgun = require('nodemailer-mailgun-transport');
+const _ = require('lodash');
 require("dotenv").config();
 
 const signToken = (userID) => {
@@ -306,20 +307,23 @@ userRouter.put('/forgot', (req, res) => {
 
       const token = JWT.sign({ _id: user._id }, process.env.SECRETEkEY, { expiresIn: '30m' });
 
-      const emailData = {
-          from:`no-reply@nimelssaQuiz.com`,
-          to: email,
-          subject: `User Password Reset link`,
-          html: `
-          div>
-            <h1>Please use the following link to reset your password</h1>
-            <p>${process.env.CLIENT_URL}/reset/${token}</p>
-            <hr />
-            <p>This email may contain sensetive information</p>
-            <p>${process.env.CLIENT_URL}</p>
-          </div>
-          `
-      };
+      const mailOptions = {
+        from: 'Nimelssa Quiz <no-reply@nimelssaQuiz.com>',
+        to: email,
+        subject: `User Reset Password`,
+        html: `
+        <div>
+          <h1>Reset password</h1>
+          <p>A password reset event has been triggered. The password reset window is limited to thirty minutes.</p>
+          <p>If you do not reset your password within thirty minutes, you will need to submit a new request.</p>
+          <p>To complete the password reset process, visit the following link:</p>
+          <p>${process.env.CLIENT_URL}/reset/${token}</p>
+          <hr />
+          <p>This email may contain sensetive information</p>
+          <p>${process.env.CLIENT_URL}</p>
+        </div>
+        `,
+    }
 
       return user.updateOne({ resetPasswordLink: token }, (err, success) => {
           if (err) {
@@ -331,36 +335,37 @@ userRouter.put('/forgot', (req, res) => {
                   },
               });
           } else {
-            const transporter = nodemailer.createTransport({
-              service: "gmail",
-              secure: false,
-              port: 587,
+
+            const auth = {
               auth: {
-                user: process.env.EMAIL,
-                pass: process.env.PASSWORD,
+                api_key: process.env.Api_key,
+                domain: process.env.Domain
               }
+            }
+            
+            let transporter = nodemailer.createTransport(nodemailerMailgun(auth));
+            
+
+            transporter.sendMail(mailOptions)
+            .then(() => {
+              // console.log('SIGNUP EMAIL SENT', sent)
+              return res.json({
+                  message: {
+                    msgBody: `Please check  ${email} inbox to complete the reset.Follow the instruction to activate your account`,
+                    msgError: false,
+                  },
+              });
+          })
+          .catch(() => {
+             
+              return res.status(500).json({
+                message: {
+                  msgBody: "Something went wrong" ,
+                  msgError: true,
+                }
             });
-    
-              transporter
-                  .sendMail(emailData)
-                  .then(sent => {
-                      // console.log('SIGNUP EMAIL SENT', sent)
-                      return res.json({
-                          message: {
-                            msgBody: `Email has been sent to ${email}. Follow the instruction to activate your account`,
-                            msgError: false,
-                          },
-                      });
-                  })
-                  .catch(error => {
-                      // console.log('SIGNUP EMAIL SENT ERROR', err)
-                      return res.status(500).json({
-                        message: {
-                          msgBody: "Something went wrong" ,
-                          msgError: true,
-                        }
-                    });
-                  });
+          });
+
           }
       });
   });

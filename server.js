@@ -35,6 +35,7 @@ mongoose
 const userRouter = require("./router/User");
 const quizRouter = require("./router/Quiz");
 const adminRouter = require("./router/Admin");
+const { getMaxListeners } = require('./models/User');
 
 
 app.use(morgan("dev"));
@@ -47,6 +48,7 @@ const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`Express Server is Listening on port ${port}...`);
 });
+
 
 
 

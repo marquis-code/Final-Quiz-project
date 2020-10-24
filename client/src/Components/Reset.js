@@ -51,7 +51,7 @@ const handleChange = event => {
     .then((responce) => {
       console.log(responce);
       M.toast({ 
-        html: "Congratulations!!! Proceed to Login with your new password",
+        html: "Congratulations!!! Exit this page and proceed to Login with your new password",
         classes: "tost-valid",
         displayLength: 3000,
       })
