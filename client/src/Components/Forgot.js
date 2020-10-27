@@ -52,7 +52,8 @@ const Forgot = (props) => {
           <div className="col s12 m4 offset-m0">
             <div className="card z-depth-4">
               <div className="card-content black white-text">
-                <span className="card-title">Forgot Password</span>
+                <span className="card-title">Forgot Password&nbsp;<i class="fas fa-sad-cry"></i>
+             <span className="sr-only">(current)</span></span>
               </div>
               <div className="card-content">
         
@@ -73,7 +74,8 @@ const Forgot = (props) => {
                 </div>
 
                  <Button block={true} className="mt-3" type="submit">
-                 <span> Submit</span>
+                 <span> Submitt&nbsp;<i class="fas fa-sign-in-alt"></i>
+             <span className="sr-only">(current)</span></span>
                 </Button>
   
                 <hr />

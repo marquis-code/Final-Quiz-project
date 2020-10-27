@@ -37,6 +37,7 @@ class QuizParentComponent extends Component {
     this.submit();
   };
 
+
   submit = () => {
     confirmAlert({
       title: 'Are you sure you want to do this?',
@@ -53,10 +54,13 @@ class QuizParentComponent extends Component {
       ]
     });
   };
+/* 
+  'Invalid Matric Number !!!', */
 
   matricConfirmation = () => {
     confirmAlert({
-      title: 'Invalid Matric Number !!!',
+      title: <h1>Invalid Matric Number&nbsp;<i class="fas fa-exclamation-triangle"></i>
+      <span className="sr-only">(current)</span></h1>,
       message: 'A valid matric number is required to confirm your submission',
       buttons: [
         {

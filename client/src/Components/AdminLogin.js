@@ -125,8 +125,12 @@ const AdminLogin = (props) => {
                   </Button>
                 </div>
                 <br />
+
+                <i class="fas fa-sad-cry"></i>
+
                 <div className="forgotPassword">
-                  <Link to="/adminForgot" style={{textDecoration:"none", listStyleType:"none"}}> Forgot Password?</Link>
+                  <Link to="/adminForgot" style={{textDecoration:"none", listStyleType:"none"}}> Forgot Password&nbsp;<i class="fas fa-sad-cry"></i>
+             <span className="sr-only">(current)</span></Link>
                 </div>
                 <br />
                 <div className="signup">

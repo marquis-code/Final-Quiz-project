@@ -125,7 +125,8 @@ const UserLogin = (props) => {
                   <Link to="/register" style={{textDecoration:"none", listStyleType:"none"}}> Create Account</Link>
                 </div>
                 <div className="forgotPassword">
-                  <Link to="/forgot" style={{textDecoration:"none", listStyleType:"none"}}> Forgot Password?</Link>
+                  <Link to="/forgot" style={{textDecoration:"none", listStyleType:"none"}}> Forgot Password&nbsp;<i class="fas fa-sad-cry"></i>
+             <span className="sr-only">(current)</span></Link>
                 </div>
               </div>
             </div>

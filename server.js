@@ -21,10 +21,10 @@ const dbOptions = {
   useFindAndModify: false,
   useCreateIndex: true,
 };
-const dbString = process.env.MONGODB_URL;
+const dbString = process.env.mongoURI;
 
 mongoose
-  .connect(dbString, dbOptions)
+  .connect(process.env.MONGODB_URI || dbString, dbOptions)
   .then(() => {
     console.log("Sucessfully connected to MongoDb Database");
   })

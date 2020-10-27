@@ -78,7 +78,8 @@ const handleChange = event => {
           <div className="col s12 m4 offset-m0">
             <div className="card z-depth-4">
               <div className="card-content black white-text">
-               <span className="card-title">Hello {username}, Type your new password</span>
+               <span className="card-title">Hello {username}, Type your new password&nbsp;<i class="fas fa-user-shield"></i>
+             <span className="sr-only">(current)</span></span>
               </div>
               <div className="card-content">
               <div className="wrap-input100 input-field">
@@ -106,7 +107,8 @@ const handleChange = event => {
             </div>
 
                  <Button block={true} className="mt-3" type="submit">
-                <span>Submit</span>
+                <span>Submit&nbsp;<i class="fas fa-sign-in-alt"></i>
+             <span className="sr-only">(current)</span></span>
                 </Button>
   
                 <hr />
