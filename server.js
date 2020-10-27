@@ -32,11 +32,9 @@ mongoose
     console.error("Couldnt Connect To MongoDb Database");
   });
 
-const userRouter = require("./router/User");
+const userRouter = require("./router/User"); //check
 const quizRouter = require("./router/Quiz");
 const adminRouter = require("./router/Admin");
-const { getMaxListeners } = require('./models/User');
-
 
 app.use(morgan("dev"));
 app.use("/admin", adminRouter);

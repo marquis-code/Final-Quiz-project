@@ -16,7 +16,7 @@ const cookieExtractor = (req) =>{
 // authorization of User  
  const jwtAuthSettings = {
     jwtFromRequest : cookieExtractor, 
-    secretOrKey : process.env.SECRETEKEY
+    secretOrKey : process.env.SECRETEkEY
   }
   
   const jwtVerifyCallback = (payload,done)=>{
@@ -32,7 +32,7 @@ const cookieExtractor = (req) =>{
   }
 
   
-const secondStrategy = new JwtStrategy(jwtAuthSettings, jwtVerifyCallback);
+const secondStrategy = new JwtStrategy(jwtAuthSettings, jwtVerifyCallback); //check(JWT requires a secrete or key)
 
 passport.use("local-userJwt",secondStrategy)
 
