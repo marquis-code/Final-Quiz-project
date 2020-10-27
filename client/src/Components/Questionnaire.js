@@ -166,7 +166,8 @@ const QuizPage = () => {
         <button 
        onClick={HandleButtonClick} 
         id="quit-button">
-          Quit
+          Quit&nbsp;<i class="fas fa-times"></i>
+             <span className="sr-only">(current)</span>
           </button> 
       </div>
     </div> 
