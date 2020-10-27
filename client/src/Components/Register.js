@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, Fragment } from "react";
+ import React, { useState, useRef, useEffect, Fragment } from "react";
 import AuthService from "../Services/AuthService";
 import Message from "../Components/Message";
 import { Helmet } from "react-helmet";
@@ -12,7 +12,6 @@ const eye = <FontAwesomeIcon icon={faEye} />;
 
 const Register = (props) => {
   const [passwordShown, setPasswordShown] = useState(false)
-  const [isShown, setIsShown] = useState(false);
   const [user, setUser] = useState({
     username: "",
     matric: "",
@@ -80,7 +79,8 @@ const togglePasswordVisibility = () => {
           <div className="col s12 m4 offset-m0">
             <div className="card z-depth-4">
               <div className="card-content black white-text">
-                <span className="card-title">User Sign Up</span>
+                <span className="card-title">User Sign Up&nbsp;<i class="fas fa-user-plus"></i>
+             <span className="sr-only">(current)</span></span>
               </div>
               <div className="card-content">
                 <div
@@ -149,6 +149,12 @@ const togglePasswordVisibility = () => {
                   <label htmlFor="password" className="sr-only">
                     Password:{" "}
                   </label>
+                  <small id="passwordHelpInline" className="form-text text-muted">
+                   Your password must be at least 8 characters long and 
+                   must contain at least an uppercase letter, lowercase letter, 
+                   a number, and at least one non-alphanumeric symbol(e.g. !@#\$%\^&\*) 
+                   and must not contain spaces or emoji.
+                  </small>
                 </div>
 
                 <div className="wrap-input100 input-field">
@@ -167,51 +173,16 @@ const togglePasswordVisibility = () => {
                   </label>
                 </div>
                 <Button block={true} className="mt-3" type="submit">
-                 <span> Register</span>
+                 <span> Register&nbsp;<i class="fas fa-user-plus"></i>
+                  <span className="sr-only">(current)</span>
+                 </span>
                 </Button>
                 <br />
                 <div className="registerLink">
                   Already Registered?
-                  <Link to="/userLogin"> Login</Link>
+                  <Link to="/userLogin" style={{textDecoration:"none", listStyleType:"none"}}> Login</Link>
                 </div>
                 <hr />
-                <Button
-                  onClick={() => setIsShown(true)}
-                  onDoubleClick={() => setIsShown(false)}
-                  block={false}
-                  className="mt-3"
-                >
-                <span>Click here for password instructions</span>
-                </Button>
-                <Fragment>
-                  {isShown && (
-                    <Fragment>
-                      <div className="inputDiv">
-                        <ul className="input-requirement">
-                          <li>
-                            Password must be at least 8 characters long(and not
-                            more than than 12 characters)
-                          </li>
-                          <li>
-                            Password must include at least 1 numeric character
-                          </li>
-                          <li>
-                            Password must include at least 1 Lower Case
-                            alphabetical character(a-z)
-                          </li>
-                          <li>
-                            Password must include at least 1 Upper Case
-                            alphabetical character(A-Z)
-                          </li>
-                          <li>
-                            Password must include at least 1 non-alphanumeric
-                            symbol(e.g. !@#\$%\^&\*)
-                          </li>
-                        </ul>
-                      </div>
-                    </Fragment>
-                  )}
-                </Fragment>
               </div>
             </div>
           </div>
@@ -223,3 +194,5 @@ const togglePasswordVisibility = () => {
 };
 
 export default Register;
+
+

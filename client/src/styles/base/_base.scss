@@ -1,44 +1,28 @@
 * {
   padding: 0;
   margin: 0;
+  box-sizing: border-box;
 }
 
 body {
+  background-image: url('/2.jpg');
   font-family: $quicksand;
-  background-image: url("/2.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
+ background-attachment: fixed;
   background-position: center;
   background-color: lightblue;
-  -webkit-transition: 0.3s;
-  -moz-transition: 0.3s;
-  -o-transition: 0.3s;
-  transition: 0.3s;
-  opacity: 0.6;
-  filter: alpha(opacity=40);
-  max-width: 100%;
-  min-height: 100vh;
-
-  content: "";
-  display: block;
-  position: absolute;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  padding: 15px;
-}
+  background-repeat: no-repeat;
+   background-size: cover;
+   max-width: 100vw;
+   -webkit-transition: 0.3s;
+   -moz-transition: 0.3s;
+   -o-transition: 0.3s;
+   transition: 0.3s;
+   opacity: 0.6;
+   filter: alpha(opacity=40);
+   flex-wrap: wrap;
+  max-height: 100vh;
+  padding:5%;
+  }
 
 body:hover {
   opacity: 1;
@@ -123,4 +107,19 @@ body:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@media screen and (min-device-width: 600px) and (max-device-width: 1500px){
+  
+}
+
+.passEye {
+  position: absolute;
+  top: 15%;
+  right: 1%;
+}
+
+.passEye:hover {
+  color: grey;
+  cursor: pointer;
 }

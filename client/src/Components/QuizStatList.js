@@ -14,8 +14,8 @@ function QuizStatList(props) {
         <title>Nimelssa Quiz-Users Quiz-statistics</title>
       </Helmet>
       <div className="container">
-        <table className="table">
-          <thead>
+        <table className="table table-striped table-bordered">
+          <thead className="thead-dark">
             <tr>
               <th scope="col">Matric</th>
               <th scope="col">Score</th>

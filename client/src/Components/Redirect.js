@@ -38,7 +38,9 @@ class RedirectUser extends Component{
                 name="matric" 
                 ref={this.matricRef}
                 className="input100 form-control form-control-lg" 
-                placeholder="Enter Matric to proceed"/> 
+                placeholder="Enter Matric to proceed"
+                required
+                /> 
                 <span className="focus-input100"></span>
             <label htmlFor="matric" className="sr-only">Matric: </label>         
             </div>

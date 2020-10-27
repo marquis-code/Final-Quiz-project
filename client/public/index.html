@@ -3,42 +3,29 @@
   <head>
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no" />
     <meta name="theme-color" content="#000000" />
     <meta
       name="nimelssa online quiz"
       content="A quiz application "
     />  
 
-   <style>
-     .svgLoader {
-        animation: spin 0.5s linear infinite;
-        margin: auto;
-     }
-     .divLoader {
-       width: 100vw;
-       height: 100vh;
-       display: flex;
-       align-items: center;
-       justify-content: center;
-       z-index: 9999;
-     }
-  @keyframes spin {
-    0% {transform: rotate(0deg);}
-    100% {transform: rotate(360deg);}
-  }
+    <link
+    rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+    crossorigin="anonymous"
+  />
 
-   </style>
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+
+    <!-- link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet"> -->
 
 <!-- MATERIALIZE CSS CDN -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
-<!-- JQUERY CDN -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/js/jquery.min.js"></script>
-
-<!-- MATERIALIZE JS CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
   <!-- MATERIALIZE ICONS CDN -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -47,7 +34,11 @@
 
   <script src="https://kit.fontawesome.com/3856ee61d0.js" crossorigin="anonymous"></script>
 
+  <!-- JQUERY CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/js/jquery.min.js"></script>
 
+<!-- MATERIALIZE JS CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
 <!-- Bootstrap js -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -58,7 +49,7 @@
     <title>Nimelssa Online Quiz</title>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript> 
+    <noscript>You need to enable JavaScript to run this app.</noscript>
    <div id="root" class="container"></div> 
   </body>
 </html>

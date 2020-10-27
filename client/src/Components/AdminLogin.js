@@ -29,6 +29,7 @@ const AdminLogin = (props) => {
     e.preventDefault();
     AuthService.adminLogin(user).then((data) => {
       const { isAuthenticated, user, message } = data;
+      setMessage(message);
       if (isAuthenticated) {
         authContext.setUser(user);
         authContext.setIsAuthenticated(isAuthenticated);
@@ -40,13 +41,15 @@ const AdminLogin = (props) => {
         props.history.push("/landingPage");
       } else {
         M.toast({ 
-          html: "Please enter valid login details!!!",
+          html: "PLEASE ENTER VALID LOGIN DETAILS",
           classes: "tost-invalid",
           displayLength: 2000,
         })
         setMessage(message);
       }
-    });
+    }).catch(() =>{
+      setMessage("Something went wrong");
+    })
   };
 
   return (
@@ -59,7 +62,9 @@ const AdminLogin = (props) => {
           <div className="col s12 m4 offset-m0">
             <div className="card z-depth-4">
               <div className="card-content black white-text">
-                <span className="card-title">Admin Login Only</span>
+                <span className="card-title">Admin Login
+                &nbsp;<i class="fas fa-user-shield"></i>
+             <span className="sr-only">(current)</span></span>
               </div>
               <div className="card-content">
                 <div
@@ -73,6 +78,7 @@ const AdminLogin = (props) => {
                     onChange={onChange}
                     className="input100 form-control form-control-lg"
                     placeholder="Enter Matric"
+                    required
                   />
                   <span className="focus-input100"></span>
                   <label htmlFor="matric" className="sr-only">
@@ -102,22 +108,30 @@ const AdminLogin = (props) => {
                     {" "}
                     Password:{" "}
                   </label>
+                  <small id="passwordHelpInline" className="form-text text-muted">
+                   Your password must be at least 8 characters long and 
+                   must contain at least an uppercase letter, lowercase letter, 
+                   a number, and at least one non-alphanumeric symbol(e.g. !@#\$%\^&\*) 
+                   and must not contain spaces or emoji.
+                  </small>
                 </div>
 
                 <div>
                   <Button block={true} className="mt-3" type="submit">
                     {" "}
-                    <span>Sign In</span>{" "}
+                    <span>Sign In&nbsp;<i class="fas fa-sign-in-alt"></i>
+             <span className="sr-only">(current)</span>
+                      </span>{" "}
                   </Button>
                 </div>
                 <br />
                 <div className="forgotPassword">
-                  <Link to="/adminForgot"> Forgot Password?</Link>
+                  <Link to="/adminForgot" style={{textDecoration:"none", listStyleType:"none"}}> Forgot Password?</Link>
                 </div>
                 <br />
                 <div className="signup">
                   Dont have an Account? 
-                  <Link to="/adminRegister"> Sign up</Link>
+                  <Link to="/adminRegister" style={{textDecoration:"none", listStyleType:"none"}}> Sign up</Link>
                 </div>
               </div>
             </div>

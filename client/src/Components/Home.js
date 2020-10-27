@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Fragment } from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import {
@@ -15,18 +15,18 @@ const Home = () => {
     <Helmet>
    <title>Nimelssa Quiz-Home</title>
  </Helmet>
- <div className="Home">
-   <Card>
+    <Card>
      <CardBody>
        <CardTitle className="name-design">
          <h1 id="text1" className="cover-heading">
-           WELCOME TO <span>NIMELSSA</span> QUIZ
+           Welcome to <span> NIMELSSA </span> Online Quiz
          </h1>
        </CardTitle>
        <br />
        <CardSubtitle>
-         <Fragment>
-           <h2 id="text2">Test of Speed,Intelligience and Accuracy</h2>
+         <Fragment> 
+         <h2 id="text3">Play, Explore and Learn</h2>
+          {/*  <h2 id="text3">Test of Speed,Intelligience and Accuracy</h2> */}
          </Fragment>
        </CardSubtitle>
      </CardBody>
@@ -34,28 +34,30 @@ const Home = () => {
      <CardBody>
        <Button block={true} className="mt-3" >
          <span>
-           <Link to="/quizInstructions" id="link1">
-             Play
+           <Link to="/quizInstructions" id="link1" style={{textDecoration:"none", listStyleType:"none"}}>
+             Play&nbsp;<i class="fas fa-paper-plane"></i>
+             <span className="sr-only">(current)</span>
            </Link>
          </span>
        </Button>
        <Button block={true} className="mt-3">
          <span>
-           <Link to="/redirect" id="link2">
-             Register
+           <Link to="/redirect" id="link2" style={{textDecoration:"none", listStyleType:"none"}}>
+             Register&nbsp;<i class="fas fa-user-plus"></i>
+             <span className="sr-only">(current)</span>
            </Link>
          </span>
        </Button>
        <Button block={true} className="mt-3" >
          <span>
-           <Link to="/redirect" id="link3">
-             Login
+           <Link to="/redirect" id="link3" style={{textDecoration:"none", listStyleType:"none"}}>
+             Login&nbsp;<i class="fas fa-sign-in-alt"></i>
+             <span className="sr-only">(current)</span>
            </Link>
          </span>
        </Button>
      </CardBody>
    </Card>
- </div>
  </Fragment>
    )
 }

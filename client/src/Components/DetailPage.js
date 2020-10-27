@@ -14,7 +14,6 @@ import M from 'materialize-css';
          axios.get(`/quiz/questions/${id}`)
          .then((responce) => {
           const data = responce.data;
-          console.log(data)
           this.setState({ singleQuestion : data});
          }).catch(()=>{
             M.toast({ 

@@ -5,6 +5,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import Questionnaire from "./Questionnaire";
 import isEmpty from "../utils/is-Empty";
 import M from "materialize-css";
+import qs from 'qs';
 
 class QuizParentComponent extends Component {
   constructor(props) {
@@ -26,7 +27,7 @@ class QuizParentComponent extends Component {
       previousRandomNumbers: [],
       usedFiftyFifty: false,
       time: {},
-      matric: "",
+     /*  matric: "", */
       errorMessage: ""
     }; 
     this.interval = null
@@ -48,6 +49,23 @@ class QuizParentComponent extends Component {
         {
           label: 'Cancel',
           onClick: () => this.props.history.push("/play")
+        }
+      ]
+    });
+  };
+
+  matricConfirmation = () => {
+    confirmAlert({
+      title: 'Invalid Matric Number !!!',
+      message: 'A valid matric number is required to confirm your submission',
+      buttons: [
+        {
+          label: 'Ok',
+          onClick: () => {this.endGame()}
+        },
+        {
+          label: 'Cancel',
+          onClick: () => {this.endGame()}
         }
       ]
     });
@@ -199,7 +217,7 @@ class QuizParentComponent extends Component {
       );
     }else{
       M.toast({ 
-        html: "Thwere is no previous question",
+        html: "There is no previous question",
         classes: "tost-valid",
         displayLength: 1000,
       })
@@ -410,42 +428,54 @@ class QuizParentComponent extends Component {
     }, 1000);
   };
 
-  endGame = () => {
-    let matricInput = window.prompt('Please Enter your Matric Number to Confirm Submission');
-    if(matricInput.toString().length !== 9 || !matricInput){
-      alert('Invalid Matric number');
-    }else{
-      const { state } = this;
-      const playerStats = {
-          score: state.score,
-          numberOfQuestions: state.numberOfQuestions,
-          numberOfAnsweredQuestions: state.correctAnswers + state.wrongAnswers,
-          correctAnswers: state.correctAnswers,
-          wrongAnswers: state.wrongAnswers,
-          fiftyFiftyUsed: 2 - state.fiftyFifty,
-          hintsUsed: 5 - state.hints,
-          matric: matricInput
-      };
+endGame = () => {
+  let userMatric = window.prompt('Please Enter your Matric Number to Confirm it is you');
+  axios.post('/user/oneUser', qs.stringify({'matric' : userMatric }))
+  .then(() => {
+    const { state } = this;
+    const playerStats = {
+      score: state.score,
+      numberOfQuestions: state.numberOfQuestions,
+      numberOfAnsweredQuestions: state.correctAnswers + state.wrongAnswers,
+      correctAnswers: state.correctAnswers,
+      wrongAnswers: state.wrongAnswers,
+      fiftyFiftyUsed: 2 - state.fiftyFifty,
+      hintsUsed: 5 - state.hints,
+      matric: userMatric
+  };
 
-      axios({
-        url: "/user/quizStat",
-        method: "POST",
-        data: playerStats, 
+  axios({
+    url: "/user/quizStat",
+    method: "POST",
+    data: playerStats, 
+  })
+    .then(() => {
+      M.toast({
+        html: "Quiz data was sucessfully submitted",
+        classes: "tost-valid",
+        displayLength: 1000 
+      })})
+     .catch(() => { 
+      M.toast({ 
+        html: "SOMETHING FAILED",
+        classes: "tost-invalid",
+        displayLength: 1000
       })
-        .then(() => {
-          M.toast({
-            html: "Quiz data was sucessfully submitted",
-            classes: "tost-valid",
-            displayLength: 1000 
-          })})
-         .catch(() => { 
-          console.log("Something went Wrong");
-        });
-        setTimeout(() => {
-          this.props.history.push('/thanksPage');
-              }, 1000);
-    }  
-}; 
+    });
+    setTimeout(() => {
+      this.props.history.push('/thanksPage');
+          }, 1000);
+
+  })
+  .catch(() => {
+    M.toast({ 
+      html: "PLEASE ENTER A VALID MATRIC NUMBER AND TRY AGAIN",
+      classes: "tost-invalid",
+      displayLength: 3000,
+      completeCallback: () => {this.matricConfirmation();}
+    })
+  })
+}
 
   render() {
     const {

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+ import React, { Component } from 'react';
 import Navbar from './Components/Navbar';
 import UserLogin from './Components/UserLogin';
 import Home from './Components/Home';
@@ -12,7 +12,7 @@ import CreatePost from './Components/CreatePost';
 import EditPost from './Components/EditPost';
 import PrivateRoute from './hocs/PrivateRoute';
 import UnPrivateRoute from './hocs/UnPrivateRoute';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'; 
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import QuizParentComponent from './Components/QuizParentComponent'; 
 import AdminLogin from './Components/AdminLogin';
 import Users from './Components/Users';
@@ -29,6 +29,7 @@ import Loader from 'react-loader-spinner';
 
 
 
+
 class App extends Component{
   constructor(props){
     super(props);
@@ -39,7 +40,7 @@ class App extends Component{
   }
 
   componentDidMount(){
-    this.timerHandle = setTimeout(() => this.setState({isLoading : false}), 2500);
+    this.timerHandle = setTimeout(() => this.setState({isLoading : false}), 1000);
   }
 
   componentWillUnmount(){
@@ -53,10 +54,9 @@ class App extends Component{
     return (
       <Router>
       <div className="container">
-         <Navbar/>
+          <Navbar />
           <Switch>
-              
-          <Route exact path="/" component={Home}/>
+         <Route exact path="/" component={Home}/>
           <UnPrivateRoute exact path="/redirect" component={RedirectUser}/>
    
           <UnPrivateRoute exact path="/userLogin" component={UserLogin}/>

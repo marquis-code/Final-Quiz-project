@@ -37,11 +37,10 @@ class EditPost extends Component{
         });
     }).catch(()=>{ 
         M.toast({ 
-            html: "!! Something went wrong when fetching specific question",
+            html: "Something went wrong when fetching specific question",
             classes: "tost-invalid",
             displayLength: 1500,
           })
-       /*  console.log('Something went wrong');  */
     })
  }
     handleChange = ({target}) => {

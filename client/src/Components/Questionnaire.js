@@ -177,7 +177,7 @@ const QuizPage = () => {
 const [isLoading, setIsLoading] = useState(true);
 
 useEffect(() => {
-let interval = setTimeout(() => setIsLoading(false), 2500);
+let interval = setTimeout(() => setIsLoading(false), 2000);
 return () => {
    if(interval){
      clearTimeout(interval);

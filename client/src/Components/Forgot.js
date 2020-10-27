@@ -34,7 +34,11 @@ const Forgot = (props) => {
       })
     })
     .catch(() => {
-      console.log('something went wrong')
+      M.toast({ 
+        html: "Something Failed",
+        classes: "tost-invalid",
+        displayLength: 3000,
+      })
     });
   };
 

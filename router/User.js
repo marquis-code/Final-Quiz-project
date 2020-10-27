@@ -12,6 +12,7 @@ const nodemailer = require("nodemailer");
 const nodemailerMailgun = require('nodemailer-mailgun-transport');
 const _ = require('lodash');
 require("dotenv").config();
+const moment = require('moment');
 
 const signToken = (userID) => {
   return JWT.sign(
@@ -36,7 +37,7 @@ userRouter.post("/register", (req, res) => {
       return res.status(400).json({
         message: {
           msgBody:
-            "OopsRegisteration Failed !!! Please Enter All Fields information Correctly.",
+            "Oops!!! Registeration Failed Please Enter All Fields information Correctly.",
           msgError: true,
         },
       });
@@ -245,8 +246,8 @@ userRouter.post(
 
         //configuring mail
         const mailOptions = {
-          from: `no-reply@nimelssaQuiz.com`,
-          to: process.env.EMAIL, // orignalAcademicgroupmail
+          from: 'no-reply@nimelssaQuiz.com',
+          to: process.env.EMAIL,
           subject: "Quiz statistics",
           html: `
     <div>
@@ -259,6 +260,7 @@ userRouter.post(
       <p>Wrong Answers = ${wrongAnswers}</p>
       <p>Fifty Fifty Used = ${fiftyFiftyUsed}</p>
       <p>Hints Used = ${hintsUsed}</p>
+      <p>Date and time submitted = ${moment().format('LLLL')}</p>
   </div>
       `,
         };
@@ -321,6 +323,7 @@ userRouter.put('/forgot', (req, res) => {
           <hr />
           <p>This email may contain sensetive information</p>
           <p>${process.env.CLIENT_URL}</p>
+          <p>Created on = ${moment().format('DD/MM/YYYY')}</p>
         </div>
         `,
     }
@@ -441,13 +444,14 @@ userRouter.get('/loggedIn', passport.authenticate("local-userJwt", {
    userRouter.post('/oneUser', passport.authenticate("local-userJwt", {
     session: false,
   }), async(req, res) => {
-   const { matric} = req.body;                                                                                                           
+   const { matric} = req.body;                                                                                                          
    const singleUser = await User.findOne({matric}).select('-password');
    if(!singleUser){
      return res.status(404).json(`User with  matric ${matric} does not exist`);
    }else{
-     return res.status(200).json(_.pick(singleUser, ['username', 'matric', 'role']));
-   } 
-    });     
+      return res.status(200).json(_.pick(singleUser, ['username', 'matric', 'role']));
+   }});     
 
 module.exports = userRouter;
+
+

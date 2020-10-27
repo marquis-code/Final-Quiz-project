@@ -25,7 +25,6 @@ const UserLogin = (props) => {
     setPasswordShown(passwordShown ? false : true);
   }
 
-  let tostHtml = '<span>PLEASE ENTER VALID LOGIN DETAILS !!!</span>'
   const onSubmit = (e) => {
     e.preventDefault();
     AuthService.userLogin(user).then((data) => {
@@ -42,10 +41,11 @@ const UserLogin = (props) => {
         props.history.push("/play"); 
       } else {
         M.toast({ 
-          html: tostHtml,
+          html: "PLEASE ENTER VALID LOGIN DETAILS",
           classes: "tost-invalid",
           displayLength: 2000
-        });
+        })
+        setMessage(message);
       } 
     }).catch(() =>{
       setMessage("Something went wrong");
@@ -62,7 +62,9 @@ const UserLogin = (props) => {
           <div className="col s12 m4 offset-m0">
             <div className="card z-depth-4">
               <div className="card-content black white-text">
-  <span className="card-title">User Sign In</span>
+                  <span className="card-title">User Login
+                  &nbsp;<i class="fas fa-sign-in-alt"></i>
+             <span className="sr-only">(current)</span></span>
               </div>
               <div className="card-content">
                 <div
@@ -76,9 +78,11 @@ const UserLogin = (props) => {
                     onChange={onChange}
                     className="input100 form-control form-control-lg"
                     placeholder="Enter Matric"
+                    required
                   />
                   <span className="focus-input100"></span>
                   <label htmlFor="matric" className="sr-only">
+                  {" "}
                     Matric:{" "}
                   </label>
                 </div>
@@ -94,26 +98,34 @@ const UserLogin = (props) => {
                     onChange={onChange}
                     className="input100 form-control form-control-lg"
                     placeholder="Enter Password"
+                    required
                   />
                    <i className="passEye" onClick={togglePasswordVisibility}>{eye}</i>
                   <span className="focus-input100"></span>
                   <label htmlFor="password" className="sr-only">
                     Password:{" "}
                   </label>
+                  <small id="passwordHelpInline" className="form-text text-muted">
+                   Your password must be at least 8 characters long and 
+                   must contain at least an uppercase letter, lowercase letter, 
+                   a number, and at least one non-alphanumeric symbol(e.g. !@#\$%\^&\*) 
+                   and must not contain spaces or emoji.
+                  </small>
                 </div>
 
                 <div>
                   <Button block={true} className="mt-3" type="submit">
-                 <span>Sign In</span>{" "}
+                 <span>Click to take the quiz&nbsp;<i class="fas fa-sign-in-alt"></i>
+             <span className="sr-only">(current)</span></span>{" "}
                   </Button>
                 </div>
                 <br />
                 <div className="registerLink">
                   Dont have an account?{" "}
-                  <Link to="/register"> Create Account</Link>
+                  <Link to="/register" style={{textDecoration:"none", listStyleType:"none"}}> Create Account</Link>
                 </div>
                 <div className="forgotPassword">
-                  <Link to="/forgot"> Forgot Password?</Link>
+                  <Link to="/forgot" style={{textDecoration:"none", listStyleType:"none"}}> Forgot Password?</Link>
                 </div>
               </div>
             </div>

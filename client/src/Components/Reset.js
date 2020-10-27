@@ -22,11 +22,10 @@ const Reset = ({ match }) => {
   useEffect(() => {
     let token = match.params.token;
     let { username } = JWT.decode(token);
-    // console.log(name);
     if (token) {
         setUser({ ...user, username, token });
     }
-}, []); //added match.prams.token and user to the dependency array
+}, []);
 
 const togglePasswordVisibility = () => {
     setPasswordShown(passwordShown ? false : true);
@@ -48,8 +47,7 @@ const handleChange = event => {
     method: "PUT",
     data: {newPassword, resetPasswordLink: token}
   })
-    .then((responce) => {
-      console.log(responce);
+    .then(() => {
       M.toast({ 
         html: "Congratulations!!! Exit this page and proceed to Login with your new password",
         classes: "tost-valid",
@@ -99,6 +97,12 @@ const handleChange = event => {
                   {" "}
                     Password:{" "}
                   </label>
+                  <small id="passwordHelpInline" className="form-text text-muted">
+                   Your password must be at least 8 characters long and 
+                   must contain at least an uppercase letter, lowercase letter, 
+                   a number, and at least one non-alphanumeric symbol(e.g. !@#\$%\^&\*) 
+                   and must not contain spaces or emoji.
+                  </small>
             </div>
 
                  <Button block={true} className="mt-3" type="submit">

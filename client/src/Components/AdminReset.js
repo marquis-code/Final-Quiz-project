@@ -60,7 +60,6 @@ const handleChange = event => {
         classes: "tost-invalid",
         displayLength: 3000,
       })
-     /*  console.log('RESET PASSWORD ERROR'); */
         setUser({ ...user });
     });
   };
@@ -100,6 +99,12 @@ const handleChange = event => {
                   {" "}
                     Password:{" "}
                   </label>
+                  <small id="passwordHelpInline" className="form-text text-muted">
+                   Your password must be at least 8 characters long and 
+                   must contain at least an uppercase letter, lowercase letter, 
+                   a number, and at least one non-alphanumeric symbol(e.g. !@#\$%\^&\*) 
+                   and must not contain spaces or emoji.
+                  </small>
             </div>
 
                  <Button block={true} className="mt-3" type="submit">

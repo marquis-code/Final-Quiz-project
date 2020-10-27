@@ -19,8 +19,8 @@ class Users extends Component{
         this.setState({
             users : data
         });
-  /*       console.log(this.state.users) */
-    })
+
+      })
     .catch(()=>{
            this.setState({errorMessage : "Error retrieving User statistics !!!!"})
         });

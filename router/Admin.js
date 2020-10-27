@@ -13,6 +13,7 @@ const nodemailer = require("nodemailer");
 const _ = require('lodash');
 const nodemailerMailgun = require('nodemailer-mailgun-transport');
 require("dotenv").config();
+const moment = require('moment');
 
 const signToken = (userID) => {
   return JWT.sign(
@@ -279,6 +280,7 @@ adminRouter.get('/allUsers', passport.authenticate("local-adminJwt", {
           <hr />
           <p>This email may contain sensetive information</p>
           <p>${process.env.CLIENT_URL}</p>
+          <p>Created on = ${moment().format('DD/MM/YYYY')}</p>
         </div>
         `,
     }

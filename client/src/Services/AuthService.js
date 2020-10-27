@@ -1,6 +1,5 @@
 export default {
   adminLogin: (user) => {
-    console.log(user);
     return fetch("/admin/adminLogin", {
       method: "post",
       body: JSON.stringify(user),
@@ -13,7 +12,6 @@ export default {
     });
   },
   userLogin: (user) => {
-    console.log(user);
     return fetch("/user/userLogin", {
       method: "post",
       body: JSON.stringify(user),
@@ -26,7 +24,6 @@ export default {
     });
   },
   register: (user) => {
-    console.log(user);
     return fetch("/user/register", {
       method: "post",
       body: JSON.stringify(user),
@@ -38,7 +35,6 @@ export default {
       .then((data) => data);
   },
   adminRegisteration: (user) => {
-    console.log(user);
     return fetch("/admin/adminRegister", {
       method: "post",
       body: JSON.stringify(user),

@@ -14,8 +14,8 @@ function UsersList(props) {
           <title>Nimelssa Quiz-Users List</title>
         </Helmet>
             <div className="container">
-              <table className="table">
-                <thead>
+              <table className="table table-striped table-bordered">
+                <thead className="thead-dark">
                 <tr>
                     <th scope="col">Name</th>
                     <th scope="col">Matric</th>
