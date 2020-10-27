@@ -16,7 +16,7 @@ const cookieExtractor = (req) =>{
 // authorization of User  
  const jwtAuthSettings = {
     jwtFromRequest : cookieExtractor, 
-    secretOrKey : process.env.SECRETEkEY
+    secretOrKey : process.env.SECRET
   }
   
   const jwtVerifyCallback = (payload,done)=>{
@@ -81,7 +81,7 @@ const adminCookieExtractor = (req) =>{
 // authorization of Admin  
  const adminJwtAuthSettings = {
     jwtFromRequest : adminCookieExtractor, 
-    secretOrKey : process.env.SECRETEKEY
+    secretOrKey : process.env.SECRET
   }
   
   const adminJwtVerifyCallback = (payload,done)=>{

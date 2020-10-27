@@ -17,10 +17,10 @@ const moment = require('moment');
 const signToken = (userID) => {
   return JWT.sign(
     {
-      iss: process.env.SECRETEkEY,
+      iss: process.env.SECRET,
       sub: userID,
     },
-    process.env.SECRETEkEY,
+    process.env.SECRET,
     {
       expiresIn: "1h",
     }
@@ -307,7 +307,7 @@ userRouter.put('/forgot', (req, res) => {
           });
       }
 
-      const token = JWT.sign({ _id: user._id }, process.env.SECRETEkEY, { expiresIn: '30m' });
+      const token = JWT.sign({ _id: user._id }, process.env.SECRET, { expiresIn: '30m' });
 
       const mailOptions = {
         from: 'Nimelssa Quiz <no-reply@nimelssaQuiz.com>',
@@ -380,7 +380,7 @@ userRouter.put('/reset', (req, res)=>{
   const { resetPasswordLink, newPassword } = req.body;
 
   if (resetPasswordLink) {
-      JWT.verify(resetPasswordLink, process.env.SECRETEkEY, function(err, decoded) {
+      JWT.verify(resetPasswordLink, process.env.SECRET, function(err, decoded) {
           if (err) {
               return res.status(400).json({
                 message: {
