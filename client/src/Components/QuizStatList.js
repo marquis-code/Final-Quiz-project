@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet";
 import Moment from "react-moment";
 import { Link } from "react-router-dom";
 import Loader from 'react-loader-spinner';
+import {Table} from 'react-bootstrap';
 
 function QuizStatList(props) {
   const { CompletedQuizStat, DeleteUserStat } = props;
@@ -14,7 +15,7 @@ function QuizStatList(props) {
         <title>Nimelssa Quiz-Users Quiz-statistics</title>
       </Helmet>
       <div className="container">
-        <table className="table table-striped table-bordered">
+        <Table responsive="sm" className="table table-striped table-bordered">
           <thead className="thead-dark">
             <tr>
               <th scope="col">Matric</th>
@@ -60,7 +61,7 @@ function QuizStatList(props) {
               </td>
             </tr>
           </tbody>
-        </table>
+        </Table>
       </div>
     </Fragment>
     )
