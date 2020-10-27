@@ -5,7 +5,7 @@ const User = require('./models/User');
 const Admin = require('./models/Admin');
 require('dotenv').config();
 
-const cookieExtractor = (req) =>{ 
+/* const cookieExtractor = (req) =>{ 
     let token = null;
     if(req && req.cookies){
         token = req.cookies["access_token"];
@@ -34,7 +34,44 @@ const cookieExtractor = (req) =>{
   
 const secondStrategy = new JwtStrategy(jwtAuthSettings, jwtVerifyCallback); //check(JWT requires a secrete or key)
 
-passport.use("local-userJwt",secondStrategy)
+passport.use("local-userJwt",secondStrategy) */
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+const userCookieExtractor = (req) =>{ 
+    let token = null;
+    if(req && req.cookies){
+        token = req.cookies["access_token"];
+    }
+    return token;
+}
+
+// authorization of User  
+ const userJwtAuthSettings = {
+    jwtFromRequest : userCookieExtractor, 
+    secretOrKey : process.env.SECRET
+  }
+  
+  const userJwtVerifyCallback = (payload,done)=>{
+       User.findById({_id : payload.sub})
+       .then((user)=>{
+          if(!user)
+             return done(null, false);
+             done(null,user);
+       })
+       .catch((err)=>{
+           done(err);
+       });
+  }
+
+  
+const userSecondStrategy = new JwtStrategy(userJwtAuthSettings, userJwtVerifyCallback); //check(JWT requires a secrete or key)
+
+passport.use("local-userJwt", userSecondStrategy )
+
+
+
 
 
 // authenticating user against a database using matric and password
