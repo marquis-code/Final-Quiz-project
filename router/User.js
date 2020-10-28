@@ -2,12 +2,12 @@ const express = require("express");
 const userRouter = express.Router();
 const passport = require("passport");
 const JWT = require("jsonwebtoken");
-const passportConfig = require("../passport"); // check
+/* const passportConfig = require("../passport"); */ // check
 const User = require("../models/User");
 const Quiz_Statistics = require("../models/QuizStatistics");
 const { registerSchema } = require("../models/validations/authValidation");
 const { loginSchema } = require("../models/validations/loginValidation");
-const { Passport } = require("passport");
+/* const { Passport } = require("passport"); */
 const nodemailer = require("nodemailer");
 const nodemailerMailgun = require('nodemailer-mailgun-transport');
 const _ = require('lodash');
@@ -15,12 +15,13 @@ require("dotenv").config();
 const moment = require('moment');
 
 const signToken = (userID) => {
+  const secret = process.env.SECRET;
   return JWT.sign(
     {
       iss: process.env.SECRET,
       sub: userID,
     },
-    process.env.SECRET,
+    secret,
     {
       expiresIn: "1h",
     }
