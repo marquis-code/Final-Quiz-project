@@ -1,1 +1,1 @@
-web: clearnode server.js
+web:node server.js
