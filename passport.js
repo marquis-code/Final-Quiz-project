@@ -7,7 +7,7 @@ require('dotenv').config();
 
 
 ///////////////////////////////////////////////  ORIGNAL ///////////////////////////////////////
- /* const cookieExtractor = (req) =>{ 
+ const cookieExtractor = (req) =>{ 
     let token = null;
     if(req && req.cookies){
         token = req.cookies["access_token"];
@@ -36,11 +36,11 @@ require('dotenv').config();
   
 const secondStrategy = new JwtStrategy(jwtAuthSettings, jwtVerifyCallback); //check(JWT requires a secrete or key)
 
-passport.use("local-userJwt",secondStrategy)  */
+passport.use("local-userJwt",secondStrategy)
 
 ///////////////////////////////////////////////  ORIGNAL ///////////////////////////////////////
 
-const cookieExtractor = (req) =>{ 
+/* const cookieExtractor = (req) =>{ 
     let token = null;
     if(req && req.cookies){
         token = req.cookies["access_token"];
@@ -66,7 +66,7 @@ const secondStrategy = new JwtStrategy(jwtAuthSettings, (payload,done)=>{
          });
     }); //check(JWT requires a secrete or key)
 
-passport.use("local-userJwt",secondStrategy)
+passport.use("local-userJwt",secondStrategy) */
 
 
 
@@ -105,7 +105,7 @@ passport.use("local-user", firstStrategy);
 
 
 ///////////////////////////////////////ADMIN////////////////////////  original
-/* 
+
 const adminCookieExtractor = (req) =>{ 
     let token = null;
     if(req && req.cookies){
@@ -136,12 +136,12 @@ const adminCookieExtractor = (req) =>{
 const adminSecondStrategy = new JwtStrategy(adminJwtAuthSettings, adminJwtVerifyCallback);
 
 passport.use("local-adminJwt",adminSecondStrategy)
- */
+ 
 
 ///////////////////////////////////////ADMIN////////////////////////  original
 
 
-
+/* 
 const adminCookieExtractor = (req) =>{ 
     let token = null;
     if(req && req.cookies){
@@ -168,7 +168,7 @@ const adminSecondStrategy = new JwtStrategy(adminJwtAuthSettings, (payload,done)
          });
     });
 
-passport.use("local-adminJwt",adminSecondStrategy)
+passport.use("local-adminJwt",adminSecondStrategy) */
 
 // authenticating admin against a database using matric and password
 
