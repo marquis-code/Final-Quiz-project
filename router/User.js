@@ -15,10 +15,10 @@ require("dotenv").config();
 const moment = require('moment');
 
 const signToken = (userID) => {
-  const secret = process.env.SECRET;
+  const secret = "NimelssaOnly"
   return JWT.sign(
     {
-      iss: process.env.SECRET,
+      iss: "NimelssaOnly",
       sub: userID,
     },
     secret,
@@ -308,7 +308,7 @@ userRouter.put('/forgot', (req, res) => {
           });
       }
 
-      const token = JWT.sign({ _id: user._id }, process.env.SECRET, { expiresIn: '30m' });
+      const token = JWT.sign({ _id: user._id }, "NimelssaOnly", { expiresIn: '30m' });
 
       const mailOptions = {
         from: 'Nimelssa Quiz <no-reply@nimelssaQuiz.com>',
@@ -381,7 +381,7 @@ userRouter.put('/reset', (req, res)=>{
   const { resetPasswordLink, newPassword } = req.body;
 
   if (resetPasswordLink) {
-      JWT.verify(resetPasswordLink, process.env.SECRET, function(err, decoded) {
+      JWT.verify(resetPasswordLink, "NimelssaOnly", function(err, decoded) {
           if (err) {
               return res.status(400).json({
                 message: {

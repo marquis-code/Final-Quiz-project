@@ -2,13 +2,13 @@ const express = require("express");
 const adminRouter = express.Router();
 const passport = require("passport");
 const JWT = require("jsonwebtoken");
-const passportConfig = require("../passport");
+/* const passportConfig = require("../passport"); */
 const Quiz_Statistics = require("../models/QuizStatistics");
 const Admin = require("../models/Admin");
 const User = require("../models/User");
  const { registerSchema } = require("../models/validations/authValidation");
  const { loginSchema } = require("../models/validations/loginValidation");
-const { Passport } = require("passport");
+/* const { Passport } = require("passport"); */
 const nodemailer = require("nodemailer");
 const _ = require('lodash');
 const nodemailerMailgun = require('nodemailer-mailgun-transport');
@@ -18,10 +18,10 @@ const moment = require('moment');
 const signToken = (userID) => {
   return JWT.sign(
     {
-      iss: process.env.SECRET,
+      iss: "NimelssaOnly",
       sub: userID,
     },
-    process.env.SECRET,
+    "NimelssaOnly",
     {
       expiresIn: "1h",
     }
@@ -264,7 +264,7 @@ adminRouter.get('/allUsers', passport.authenticate("local-adminJwt", {
                 });
             }
   
-            const token = JWT.sign({ _id: user._id }, process.env.SECRET, { expiresIn: '30m' });
+            const token = JWT.sign({ _id: user._id }, "NimelssaOnly", { expiresIn: '30m' });
            
       const mailOptions = {
         from: 'Nimelssa Quiz <no-reply@nimelssaQuiz.com>',
@@ -336,7 +336,7 @@ adminRouter.get('/allUsers', passport.authenticate("local-adminJwt", {
       const { resetPasswordLink, newPassword } = req.body;
     
       if (resetPasswordLink) {
-          JWT.verify(resetPasswordLink, process.env.SECRET, function(err, decoded) {
+          JWT.verify(resetPasswordLink, "NimelssaOnly", function(err, decoded) {
               if (err) {
                   return res.status(400).json({
                       message: {

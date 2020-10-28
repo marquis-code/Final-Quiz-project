@@ -51,7 +51,7 @@ const cookieExtractor = (req) =>{
 // authorization of User  
  const jwtAuthSettings = {
     jwtFromRequest : cookieExtractor, 
-    secretOrKey : process.env.SECRET
+    secretOrKey : "NimelssaOnly"
   }
   
   
@@ -153,7 +153,7 @@ const adminCookieExtractor = (req) =>{
 // authorization of Admin  
  const adminJwtAuthSettings = {
     jwtFromRequest : adminCookieExtractor, 
-    secretOrKey : process.env.SECRET
+    secretOrKey : "NimelssaOnly"
   }
   
   

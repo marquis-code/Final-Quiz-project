@@ -34,7 +34,7 @@ mongoose
 
 const userRouter = require("./router/User"); //check
 const quizRouter = require("./router/Quiz");
-const adminRouter = require("./router/Admin");
+const adminRouter = require("./router/Admin"); //check
 
 app.use(morgan("dev"));
 app.use("/admin", adminRouter);
