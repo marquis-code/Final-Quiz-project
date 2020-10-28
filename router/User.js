@@ -7,7 +7,6 @@ const User = require("../models/User");
 const Quiz_Statistics = require("../models/QuizStatistics");
 const { registerSchema } = require("../models/validations/authValidation");
 const { loginSchema } = require("../models/validations/loginValidation");
-const { Passport } = require("passport");
 const nodemailer = require("nodemailer");
 const nodemailerMailgun = require('nodemailer-mailgun-transport');
 const _ = require('lodash');
@@ -15,13 +14,12 @@ require("dotenv").config();
 const moment = require('moment');
 
 const signToken = (userID) => {
-  const secret = "NimelssaOnly"
   return JWT.sign(
     {
       iss: "NimelssaOnly",
       sub: userID,
     },
-    secret,
+    "NimelssaOnly",
     {
       expiresIn: "1h",
     }

@@ -5,23 +5,21 @@ const User = require('./models/User');
 const Admin = require('./models/Admin');
 require('dotenv').config();
 
-
-///////////////////////////////////////////////  ORIGNAL ///////////////////////////////////////
- const cookieExtractor = (req) =>{ 
+///////////////////////////////////////////////// USER JWT STRATEGY SETTINGS ///////////////////////////////////////////////////
+ const cookieExtractor = req =>{ 
     let token = null;
     if(req && req.cookies){
         token = req.cookies["access_token"];
     }
     return token;
 }
-
-// authorization of User  
- const jwtAuthSettings = {
+  
+ const userJwtAuthSettings = {
     jwtFromRequest : cookieExtractor, 
-    secretOrKey : process.env.SECRET
+    secretOrKey : "NimelssaOnly"
   }
   
-  const jwtVerifyCallback = (payload,done)=>{
+  const userJwtVerifyCallback = (payload,done)=>{
        User.findById({_id : payload.sub})
        .then((user)=>{
           if(!user)
@@ -29,53 +27,17 @@ require('dotenv').config();
              done(null,user);
        })
        .catch((err)=>{
-           done(err);
-       });
-  }
-
-  
-const secondStrategy = new JwtStrategy(jwtAuthSettings, jwtVerifyCallback); //check(JWT requires a secrete or key)
-
-passport.use("local-userJwt",secondStrategy)
-
-///////////////////////////////////////////////  ORIGNAL ///////////////////////////////////////
-
-/* const cookieExtractor = (req) =>{ 
-    let token = null;
-    if(req && req.cookies){
-        token = req.cookies["access_token"];
-    }
-    return token;
-}
-
-// authorization of User  
- const jwtAuthSettings = {
-    jwtFromRequest : cookieExtractor, 
-    secretOrKey : "NimelssaOnly"
+           done(err, false);
+       }); 
   }
   
-  
-const secondStrategy = new JwtStrategy(jwtAuthSettings, (payload,done)=>{
-    User.findById({_id : payload.sub},(error, user)=>{
-    if(error)
-       return done(error,false);
-    if(user)
-       return done(null,user);
-    else
-        return done(null,false);
-         });
-    }); //check(JWT requires a secrete or key)
+const userSecondStrategy = new JwtStrategy(userJwtAuthSettings, userJwtVerifyCallback);
 
-passport.use("local-userJwt",secondStrategy) */
+passport.use("local-userJwt",userSecondStrategy)
 
+///////////////////////////////////////////////  USER LOCAL STRATEGY SETTINGS ///////////////////////////////////////
 
-
-
-
-//////////////////////////////////////////////////////////////////ORIGNAL /////////////////////////////////////////
-// authenticating user against a database using matric and password
-
-const customInputs = {
+const userCustomInputs = {
     usernameField : "matric",
     passwordField : "password",
     session: false,
@@ -83,13 +45,11 @@ const customInputs = {
 }
 
 
-const verifyCallback = (req, matric, password, done) =>{
+const userVerifyCallback = (req, matric, password, done) =>{
      User.findOne({matric})
       .then((user)=>{
-               // if no user exist
           if(!user)
               return done(null, false, {msgBody : "Invalid Matric or Password.", msgError: true});
-               //if user exist then check if password is correct 
               user.comparePassword(password, done);
       })
       .catch((err)=>{
@@ -97,14 +57,13 @@ const verifyCallback = (req, matric, password, done) =>{
       });
 }
 
+const userFirstStrategy = new LocalStrategy(userCustomInputs, userVerifyCallback);
 
-const firstStrategy = new LocalStrategy(customInputs, verifyCallback);
-
-passport.use("local-user", firstStrategy);
-
+passport.use("local-user", userFirstStrategy);
 
 
-///////////////////////////////////////ADMIN////////////////////////  original
+
+///////////////////////////////////////////////// ADMIN JWT STRATEGY SETTINGS ///////////////////////////////////////////////////
 
 const adminCookieExtractor = (req) =>{ 
     let token = null;
@@ -114,10 +73,9 @@ const adminCookieExtractor = (req) =>{
     return token;
 }
 
-// authorization of Admin  
  const adminJwtAuthSettings = {
     jwtFromRequest : adminCookieExtractor, 
-    secretOrKey : process.env.SECRET
+    secretOrKey : "NimelssaOnly"
   }
   
   const adminJwtVerifyCallback = (payload,done)=>{
@@ -138,39 +96,7 @@ const adminSecondStrategy = new JwtStrategy(adminJwtAuthSettings, adminJwtVerify
 passport.use("local-adminJwt",adminSecondStrategy)
  
 
-///////////////////////////////////////ADMIN////////////////////////  original
-
-
-/* 
-const adminCookieExtractor = (req) =>{ 
-    let token = null;
-    if(req && req.cookies){
-        token = req.cookies["access_token"];
-    }
-    return token;
-}
-
-// authorization of Admin  
- const adminJwtAuthSettings = {
-    jwtFromRequest : adminCookieExtractor, 
-    secretOrKey : "NimelssaOnly"
-  }
-  
-  
-const adminSecondStrategy = new JwtStrategy(adminJwtAuthSettings, (payload,done)=>{
-    Admin.findById({_id : payload.sub},(error, user)=>{
-    if(error)
-       return done(error,false);
-    if(user)
-       return done(null,user);
-    else
-        return done(null,false);
-         });
-    });
-
-passport.use("local-adminJwt",adminSecondStrategy) */
-
-// authenticating admin against a database using matric and password
+///////////////////////////////////////////////  ADMIN LOCAL STRATEGY SETTINGS ///////////////////////////////////////
 
 const adminCustomInputs = {
     usernameField : "matric",

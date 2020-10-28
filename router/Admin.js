@@ -8,7 +8,6 @@ const Admin = require("../models/Admin");
 const User = require("../models/User");
  const { registerSchema } = require("../models/validations/authValidation");
  const { loginSchema } = require("../models/validations/loginValidation");
-const { Passport } = require("passport");
 const nodemailer = require("nodemailer");
 const _ = require('lodash');
 const nodemailerMailgun = require('nodemailer-mailgun-transport');
