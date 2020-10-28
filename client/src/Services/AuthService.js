@@ -1,4 +1,4 @@
-export default {
+ export default {
   adminLogin: (user) => {
     return fetch("/admin/adminLogin", {
       method: "post",
@@ -62,3 +62,4 @@ export default {
     });
   },
 };
+

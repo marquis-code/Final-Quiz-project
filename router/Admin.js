@@ -17,10 +17,10 @@ const moment = require('moment');
  const signToken = (userID) => {
   return JWT.sign(
     {
-      iss: "NimelssaOnly",
+      iss: process.env.SECRET,
       sub: userID,
     },
-    "NimelssaOnly",
+    process.env.SECRET,
     {
       expiresIn: "1h",
     }

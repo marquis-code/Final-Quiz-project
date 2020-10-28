@@ -16,7 +16,7 @@ require('dotenv').config();
   
  const userJwtAuthSettings = {
     jwtFromRequest : cookieExtractor, 
-    secretOrKey : "NimelssaOnly"
+    secretOrKey : process.env.SECRET
   }
   
   const userJwtVerifyCallback = (payload,done)=>{
@@ -75,7 +75,7 @@ const adminCookieExtractor = (req) =>{
 
  const adminJwtAuthSettings = {
     jwtFromRequest : adminCookieExtractor, 
-    secretOrKey : "NimelssaOnly"
+    secretOrKey : process.env.SECRET
   }
   
   const adminJwtVerifyCallback = (payload,done)=>{

@@ -8,6 +8,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 require("dotenv").config();
+const path = require('path');
 
 app.use(helment());
 
@@ -24,10 +25,9 @@ const dbOptions = {
   useFindAndModify: false,
   useCreateIndex: true,
 };
-const dbString = process.env.mongoURI;
 
  mongoose
-  .connect(process.env.MONGODB_URI || dbString, dbOptions)
+  .connect(process.env.MONGODB_URI || "mongodb://localhost:27017/Online-Quiz", dbOptions)
   .then(() => {
     console.log("Sucessfully connected to MongoDb Database");
   })
@@ -47,8 +47,11 @@ app.use("/user", userRouter);
 app.use("/quiz", quizRouter);
 
 
-if(process.env.NODE_ENV === 'production') {
+if(process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
   app.use(express.static("client/build"));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/client/build/index.html'));
+  });
 }
 
 
