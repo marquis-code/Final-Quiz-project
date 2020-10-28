@@ -2,7 +2,7 @@ const express = require("express");
 const adminRouter = express.Router();
 const passport = require("passport");
 const JWT = require("jsonwebtoken");
-const passportConfig = require("../passport"); 
+const passportConfig = require("../passport");
 const Quiz_Statistics = require("../models/QuizStatistics");
 const Admin = require("../models/Admin");
 const User = require("../models/User");
@@ -15,7 +15,7 @@ const nodemailerMailgun = require('nodemailer-mailgun-transport');
 require("dotenv").config();
 const moment = require('moment');
 
-const signToken = (userID) => {
+ const signToken = (userID) => {
   return JWT.sign(
     {
       iss: "NimelssaOnly",
@@ -264,9 +264,8 @@ adminRouter.get('/allUsers', passport.authenticate("local-adminJwt", {
                 });
             }
   
-            const token = JWT.sign({ _id: user._id }, "NimelssaOnly", { expiresIn: '30m' });
-           
-      const mailOptions = {
+             const token = JWT.sign({ _id: user._id }, "NimelssaOnly", { expiresIn: '30m' });
+       const mailOptions = {
         from: 'Nimelssa Quiz <no-reply@nimelssaQuiz.com>',
         to: email,
         subject: `Admin Reset Password`,
@@ -283,7 +282,7 @@ adminRouter.get('/allUsers', passport.authenticate("local-adminJwt", {
           <p>Created on = ${moment().format('DD/MM/YYYY')}</p>
         </div>
         `,
-    }
+    } 
       
             return user.updateOne({ resetPasswordLink: token }, (err, success) => {
                 if (err) {
@@ -302,6 +301,8 @@ adminRouter.get('/allUsers', passport.authenticate("local-adminJwt", {
                       domain: process.env.Domain
                     }
                   }
+
+        
                   
                   let transporter = nodemailer.createTransport(nodemailerMailgun(auth));
                   
@@ -336,7 +337,7 @@ adminRouter.get('/allUsers', passport.authenticate("local-adminJwt", {
       const { resetPasswordLink, newPassword } = req.body;
     
       if (resetPasswordLink) {
-          JWT.verify(resetPasswordLink, "NimelssaOnly", function(err, decoded) {
+          JWT.verify(resetPasswordLink, process.env.SECRET, function(err, decoded) {
               if (err) {
                   return res.status(400).json({
                       message: {

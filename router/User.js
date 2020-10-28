@@ -2,7 +2,7 @@ const express = require("express");
 const userRouter = express.Router();
 const passport = require("passport");
 const JWT = require("jsonwebtoken");
-const passportConfig = require("../passport"); 
+ const passportConfig = require("../passport");
 const User = require("../models/User");
 const Quiz_Statistics = require("../models/QuizStatistics");
 const { registerSchema } = require("../models/validations/authValidation");
@@ -26,7 +26,8 @@ const signToken = (userID) => {
       expiresIn: "1h",
     }
   );
-};
+}; 
+
 
 //User registeration
 userRouter.post("/register", (req, res) => {
@@ -264,8 +265,9 @@ userRouter.post(
       <p>Date and time submitted = ${moment().format('LLLL')}</p>
   </div>
       `,
-        };
+        }; 
 
+  
         const transporter = nodemailer.createTransport({
           service: "gmail",
           secure: false,
@@ -275,6 +277,9 @@ userRouter.post(
             pass: process.env.PASSWORD,
           },
         });
+
+
+
 
         transporter
           .sendMail(mailOptions)
@@ -308,9 +313,9 @@ userRouter.put('/forgot', (req, res) => {
           });
       }
 
-      const token = JWT.sign({ _id: user._id }, "NimelssaOnly", { expiresIn: '30m' });
-
-      const mailOptions = {
+       const token = JWT.sign({ _id: user._id }, "NimelssaOnly", { expiresIn: '30m' });
+    
+        const mailOptions = {
         from: 'Nimelssa Quiz <no-reply@nimelssaQuiz.com>',
         to: email,
         subject: `User Reset Password`,
@@ -327,7 +332,8 @@ userRouter.put('/forgot', (req, res) => {
           <p>Created on = ${moment().format('DD/MM/YYYY')}</p>
         </div>
         `,
-    }
+    } 
+
 
       return user.updateOne({ resetPasswordLink: token }, (err, success) => {
           if (err) {
@@ -345,7 +351,8 @@ userRouter.put('/forgot', (req, res) => {
                 api_key: process.env.Api_key,
                 domain: process.env.Domain
               }
-            }
+            } 
+
             
             let transporter = nodemailer.createTransport(nodemailerMailgun(auth));
             
@@ -381,7 +388,7 @@ userRouter.put('/reset', (req, res)=>{
   const { resetPasswordLink, newPassword } = req.body;
 
   if (resetPasswordLink) {
-      JWT.verify(resetPasswordLink, "NimelssaOnly", function(err, decoded) {
+      JWT.verify(resetPasswordLink, process.env.SECRET, function(err, decoded) {
           if (err) {
               return res.status(400).json({
                 message: {
