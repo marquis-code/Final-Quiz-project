@@ -23,8 +23,8 @@ const AdminReset = ({ match }) => {
     let token = match.params.token;
     let { username } = JWT.decode(token);
     if (token) {
-        setUser({ ...user, username, token });
-    }
+         setUser({ ...user, username, token }); 
+     }
 }, []);  //made a change(passed match.prams.token and user to the dependency array)
 
 const togglePasswordVisibility = () => {

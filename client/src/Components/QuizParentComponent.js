@@ -27,7 +27,6 @@ class QuizParentComponent extends Component {
       previousRandomNumbers: [],
       usedFiftyFifty: false,
       time: {},
-     /*  matric: "", */
       errorMessage: ""
     }; 
     this.interval = null
@@ -233,7 +232,7 @@ class QuizParentComponent extends Component {
       html: "Correct",
       classes: "tost-valid",
       displayLength: 1000,
-    });
+    }); 
     this.setState(
       (prevState) => ({
         score: prevState.score + 1,
@@ -466,6 +465,7 @@ endGame = () => {
         displayLength: 1000
       })
     });
+    
     setTimeout(() => {
       this.props.history.push('/thanksPage');
           }, 1000);

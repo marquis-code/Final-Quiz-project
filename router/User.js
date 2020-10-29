@@ -13,7 +13,6 @@ const _ = require('lodash');
 require("dotenv").config();
 const moment = require('moment');
 
-
 const signToken = (userID) => {
   return JWT.sign(
     {
@@ -28,11 +27,9 @@ const signToken = (userID) => {
 }; 
 
 
-
-
 //User registeration
 userRouter.post("/register", (req, res) => {
-    const { username, matric, password, email, role } = req.body;
+    const { username, matric, password, email, role} = req.body;
     const validationResult = registerSchema.validate(req.body, {
       abortEarly: false,
     });
@@ -65,7 +62,7 @@ userRouter.post("/register", (req, res) => {
             },
           });
         } else {
-          const newUser = new User({ username, matric, password, email, role });
+          const newUser = new User({ username, matric, password, email, role});
           newUser
             .save()
             .then(() => {
@@ -128,7 +125,7 @@ userRouter.post(
       }
 
       if (req.isAuthenticated()) {
-        const { _id, matric, role } = req.user;
+        const { _id, matric, role} = req.user;
         const token = signToken(_id);
         res.cookie("access_token", token, {
           httpOnly: true,
@@ -140,7 +137,7 @@ userRouter.post(
           isAuthenticated: true,
           user: {
             matric,
-            role,
+            role
           }
         });
       } else {
@@ -152,6 +149,7 @@ userRouter.post(
       }
   }
 );
+
 
 userRouter.get(
   "/logout",
@@ -170,7 +168,6 @@ userRouter.get(
       });
   }
 );
-
 
 
  userRouter.get(
@@ -204,7 +201,7 @@ userRouter.post(
       wrongAnswers,
       fiftyFiftyUsed,
       hintsUsed,
-      matric,
+      matric
     } = req.body;
 
     //Checking if matric entered exist on the User database
@@ -246,7 +243,7 @@ userRouter.post(
               }
           });
           });
-
+ 
         //configuring mail
         const mailOptions = {
           from: 'no-reply@nimelssaQuiz.com',
@@ -268,7 +265,6 @@ userRouter.post(
       `,
         }; 
 
-  
         const transporter = nodemailer.createTransport({
           service: "gmail",
           secure: false,
@@ -278,9 +274,6 @@ userRouter.post(
             pass: process.env.PASSWORD,
           },
         });
-
-
-
 
         transporter
           .sendMail(mailOptions)
@@ -334,7 +327,6 @@ userRouter.put('/forgot', (req, res) => {
         </div>
         `,
     } 
-
 
       return user.updateOne({ resetPasswordLink: token }, (err, success) => {
           if (err) {
