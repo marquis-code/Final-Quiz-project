@@ -17,20 +17,6 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const whitelist = ['http://localhost:3000', 'http://localhost:5000', 'http://aqueous-everglades-57967.herokuapp.com']
-const corsOptions = {
-  orign: function (origin, callback) {
-    console.log("** Orign of request" + origin)
-    if(whitelist.indexOf(origin) !== -1 || !origin){
-      console.log("Origin acceptable")
-      callback(null, true)
-    } else {
-      console.log("Origin rejected")
-      callback(new Error("Not allowed by CORS"))
-    }
-  }
-}
-
 app.use(cors(corsOptions));
 
 const dbOptions = {
@@ -61,7 +47,7 @@ app.use("/quiz", quizRouter);
 
 
 if(process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
+  app.use(express.static('client/build/'));
 
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
