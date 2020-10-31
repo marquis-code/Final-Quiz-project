@@ -36,25 +36,31 @@ const dbOptions = {
   }); 
 
 
-const userRouter = require("./router/User"); //check
+const userRouter = require("./router/User"); 
 const quizRouter = require("./router/Quiz");
-const adminRouter = require("./router/Admin"); //check
+const adminRouter = require("./router/Admin"); 
 
 app.use(morgan("tiny"));
 app.use("/admin", adminRouter);
 app.use("/user", userRouter);
 app.use("/quiz", quizRouter);
 
-
+/* 
 if(process.env.NODE_ENV === 'production') {
-  /* app.use(express.static('client/build/')); */
-  /* app.get('*', express.static(path.join(__dirname, "client", "build"))); */
-  app.use('/', express.static(path.join(__dirname, 'client/build')));
+ app.use(express.static('client/build'));
 
-/*   app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-  }); */
-}
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+  }); 
+} */
+
+if(process.env.NODE_ENV='production') {
+  app.use(express.static('client/build'));
+ 
+   app.get('*', (req, res) => {
+     res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+   }); 
+ }
 
 
 const PORT = process.env.PORT || 5000;
