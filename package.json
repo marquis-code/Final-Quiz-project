@@ -1,5 +1,5 @@
 {
-  "name": "Nimelssa-online-quiz",
+  "name": "my_app",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -9,11 +9,12 @@
     "install-client": "cd client && npm install",
     "heroku-postbuild": "npm run install-client && npm run build",
     "start": "node server.js",
-    "client": "cd client && npm start"
+    "client": "cd client && npm start",
+    "dev": "concurrently -n 'server,client' -c 'green,red' \"nodemon server.js\" \"npm run client\""
   },
   "keywords": [],
-  "author": "", 
-  "license": "ISC",  
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
@@ -43,7 +44,8 @@
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
-    "qs": "^6.9.4"
+    "qs": "^6.9.4",
+    "react-emojione": "^5.0.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.6"

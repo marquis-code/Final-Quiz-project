@@ -32,14 +32,14 @@ const Navbar = (props) => {
       <>
           <li className="nav-item">
            <Link className="nav-link text-white text-uppercase ml-5" to="/">
-             Home&nbsp;<i class="fas fa-home"></i>
+             Home&nbsp;<i className="fas fa-home"></i>
              <span className="sr-only">(current)</span>
             </Link>
           </li>
        
           <li className="nav-item " >
               <Link className="nav-link text-white text-uppercase ml-5" to="/redirect">
-                Signup&nbsp;<i class="fas fa-user-plus"></i>
+                Signup&nbsp;<i className="fas fa-user-plus"></i>
              <span className="sr-only">(current)</span>
               </Link>
           </li>
@@ -47,7 +47,7 @@ const Navbar = (props) => {
        
           <li className="nav-item" >
             <Link className="nav-link text-white text-uppercase ml-5" to="/redirect">
-              Login&nbsp;<i class="fas fa-sign-in-alt"></i>
+              Login&nbsp;<i className="fas fa-sign-in-alt"></i>
              <span className="sr-only">(current)</span>
             </Link>
           </li>
@@ -71,14 +71,14 @@ const Navbar = (props) => {
           <>
               <li className="nav-item" >
                 <Link className="nav-link text-white text-uppercase ml-5" to="/landingPage">
-                  Admin&nbsp;<i class="fas fa-user-shield"></i>
+                  Admin&nbsp;<i className="fas fa-user-shield"></i>
              <span className="sr-only">(current)</span>
                 </Link>
               </li>
           
             <li onClick={onClickAdminLogoutHandler}>
               <Link className="nav-link text-white text-uppercase ml-5">
-                Admin Logout&nbsp;<i class="fas fa-sign-out-alt"></i>
+                Admin Logout&nbsp;<i className="fas fa-sign-out-alt"></i>
              <span className="sr-only">(current)</span>
               </Link>
             </li>
@@ -87,7 +87,7 @@ const Navbar = (props) => {
             <>
              <li onClick={onClickLogoutHandler}>
              <Link className="nav-link text-white text-uppercase ml-5">
-               Logout&nbsp;<i class="fas fa-sign-out-alt"></i>
+               Logout&nbsp;<i className="fas fa-sign-out-alt"></i>
              <span className="sr-only">(current)</span>
                </Link>
               </li>
@@ -102,7 +102,7 @@ const Navbar = (props) => {
 
 <div className="navbar-brand ml-5"><a href="/"><img style={{height: "50px", width:"10vw"}} src='./nimelssaLogo.png' alt="logo"/></a></div>
 
-<button 
+ <button 
  style={{left:"60%", position:"relative"}}
   className="navbar-toggler" 
   type="button" 
@@ -112,8 +112,8 @@ const Navbar = (props) => {
   aria-expanded="false" 
   aria-label="Toggle navigation"
   >
-    <span className="navbar-toggler-icon"></span> 
-</button>
+  <span className="navbar-toggler-icon"></span>
+</button> 
      
        <div className="spacer"/>
 

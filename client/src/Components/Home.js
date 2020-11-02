@@ -8,7 +8,8 @@ import {
   CardSubtitle,
   Button,
 } from "reactstrap";
-  
+import {emojify} from 'react-emojione';
+
 const Home = () => {
    return(
     <Fragment>
@@ -20,13 +21,13 @@ const Home = () => {
        <CardTitle className="name-design">
          <h1 id="text1" className="cover-heading">
            Welcome to <span> NIMELSSA </span> Online Quiz
+           {emojify('\u2728', {output: 'unicode'})}
          </h1>
        </CardTitle>
        <br />
        <CardSubtitle>
          <Fragment> 
          <h2 id="text3">Play, Explore and Learn</h2>
-          {/*  <h2 id="text3">Test of Speed,Intelligience and Accuracy</h2> */}
          </Fragment>
        </CardSubtitle>
      </CardBody>
@@ -48,7 +49,7 @@ const Home = () => {
            </Link>
          </span>
        </Button>
-       <Button block={true} className="mt-3" >
+      <Button block={true} className="mt-3" >
          <span>
            <Link to="/redirect" id="link3" style={{textDecoration:"none", listStyleType:"none"}}>
              Login&nbsp;<i class="fas fa-sign-in-alt"></i>

@@ -453,6 +453,13 @@ userRouter.get('/loggedIn', passport.authenticate("local-userJwt", {
       return res.status(200).json(_.pick(singleUser, ['username', 'matric', 'role']));
    }});     
 
+userRouter.get('/pastQuestions', (req, res) => {
+  const { hasAttemptedQuiz } = req.user;
+  if(hasAttemptedQuiz === false){
+    console.log('Access denied');
+  }
+})
+
 module.exports = userRouter;
 
 

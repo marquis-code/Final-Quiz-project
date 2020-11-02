@@ -26,6 +26,8 @@ import Thanks from './Components/Thanks';
 import AdminForgot from './Components/AdminForgot';
 import AdminReset from './Components/AdminReset';
 import Loader from 'react-loader-spinner';
+import CreatePastQuestions from './Components/CreatePastQuestions';
+import PastQuestions from './Components/PastQuestions';
 
 
 
@@ -73,6 +75,7 @@ class App extends Component{
           <UnPrivateRoute exact path="/adminChoice" component={AdminChoice}/>
    
           <PrivateRoute exact path="/play"  roles={["user"]} component={QuizParentComponent}/>
+          <PrivateRoute exact path="/pastQuestionsList"  roles={["user"]} component={PastQuestions}/>
      
           <PrivateRoute exact path="/thanksPage" roles={["user"]} component={Thanks} />
         
@@ -82,7 +85,8 @@ class App extends Component{
           <PrivateRoute exact path="/editPost/:id" roles={["admin"]} component={EditPost}/>
           <PrivateRoute exact path="/users" roles={["admin"]} component={Users}/>
           <PrivateRoute exact path="/quizStat" roles={["admin"]} component={QuizStat}/>
-      
+          <PrivateRoute exact path="/pastQuestion" roles={["admin"]} component={CreatePastQuestions}/>
+
            <Route path="*" component={NotFound} />
           </Switch>
         </div>

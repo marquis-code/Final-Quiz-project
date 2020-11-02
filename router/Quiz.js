@@ -1,7 +1,7 @@
 const express = require('express');
 const Quizrouter = express.Router();
 const Quiz = require('../models/Quiz');
-
+const PastQuestions = require('../models/PastQuestions');
 
 //Create a new question
   Quizrouter.post('/questions', async (req, res)=>{
@@ -20,11 +20,35 @@ const Quiz = require('../models/Quiz');
     });
  })
 
+ Quizrouter.post('/pastQuestions', async (req, res)=>{
+  const { question, answer, category } = req.body;
+
+ const pastData = { question, answer, category }
+  
+  const newPastQuestion = await PastQuestions.create(pastData);
+ 
+  newPastQuestion.save()
+  .then(()=>{
+    res.status(201).json("Past Question was sucessfully saved to database");
+  })
+  .catch(()=>{
+    res.status(400).json({'Error': "Sorry!!! Internal server Error"});
+  });
+})
+
+
+Quizrouter.get('/getPastQuestions', async (req, res)=>{
+  const allPastQuestions =await PastQuestions.find();
+  return res.status(200).json(allPastQuestions);
+});
+
+
 // Get All Questions
  Quizrouter.get('/questions', async (req, res)=>{
     const allQuestions =await Quiz.find().limit(30); //The limit helps to fetch limites amount of data fro MongoDb
     return res.status(200).json(allQuestions);
   });
+    
 
 //Get one Question
 

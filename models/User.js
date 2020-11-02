@@ -41,6 +41,10 @@ let UserSchema = new mongoose.Schema ({
     resetPasswordLink: {
         data: String,
         default: ''
+    },
+    hasAttemptedQuiz:{
+        type: Boolean,
+        default: false
     }
 });
 
