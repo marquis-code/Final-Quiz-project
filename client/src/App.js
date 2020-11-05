@@ -1,5 +1,6 @@
  import React, { Component } from 'react';
 import Navbar from './Components/Navbar';
+/* import Footer from './Components/Footer'; */
 import UserLogin from './Components/UserLogin';
 import Home from './Components/Home';
 import Register from './Components/Register';
@@ -28,7 +29,8 @@ import AdminReset from './Components/AdminReset';
 import Loader from 'react-loader-spinner';
 import CreatePastQuestions from './Components/CreatePastQuestions';
 import PastQuestions from './Components/PastQuestions';
-
+import Complain from './Components/Complain';
+import UserComplain from './Components/UserComplain';
 
 
 
@@ -67,6 +69,7 @@ class App extends Component{
           <UnPrivateRoute exact path="/forgot" component={Forgot}/>
           <UnPrivateRoute exact path="/reset/:token" component={Reset}/>
           <UnPrivateRoute exact path="/register" component={Register}/>
+          
    
           <UnPrivateRoute exact path="/adminLogin" component={AdminLogin}/>
           <UnPrivateRoute exact path="/adminRegister" component={AdminRegister}/>
@@ -78,7 +81,8 @@ class App extends Component{
           <PrivateRoute exact path="/pastQuestionsList"  roles={["user"]} component={PastQuestions}/>
      
           <PrivateRoute exact path="/thanksPage" roles={["user"]} component={Thanks} />
-        
+          <PrivateRoute exact path="/complain" roles={["user"]} component={Complain} />
+
           <PrivateRoute exact path="/landingPage" roles={["admin"]} component={LandingPage}/>
           <PrivateRoute exact path="/quiz/:id" roles={["admin"]} component={DetailPage}/>
           <PrivateRoute exact path="/questions" roles={["admin"]} component={CreatePost}/>
@@ -86,9 +90,10 @@ class App extends Component{
           <PrivateRoute exact path="/users" roles={["admin"]} component={Users}/>
           <PrivateRoute exact path="/quizStat" roles={["admin"]} component={QuizStat}/>
           <PrivateRoute exact path="/pastQuestion" roles={["admin"]} component={CreatePastQuestions}/>
-
+          <PrivateRoute exact path="/userComplains" roles={["admin"]} component={UserComplain}/>
            <Route path="*" component={NotFound} />
           </Switch>
+       {/*    <Footer /> */}
         </div>
       </Router>
      ); 

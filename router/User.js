@@ -5,7 +5,9 @@ const JWT = require("jsonwebtoken");
  const passportConfig = require("../passport");
 const User = require("../models/User");
 const Quiz_Statistics = require("../models/QuizStatistics");
+const Complain = require('../models/Complain');
 const { registerSchema } = require("../models/validations/authValidation");
+const { complainSchema } = require("../models/validations/complainValidation");
 const { loginSchema } = require("../models/validations/loginValidation");
 const nodemailer = require("nodemailer");
 const nodemailerMailgun = require('nodemailer-mailgun-transport');
@@ -94,6 +96,48 @@ userRouter.post("/register", (req, res) => {
       });
 });
 
+
+//Create complain
+userRouter.post('/complain', passport.authenticate("local-user", {
+  session: false,
+}), async (req, res)=>{
+  const { level,matric, complain} = req.body;
+  const complainResult = complainSchema.validate(req.body, {
+    abortEarly: false,
+  });
+  if (complainResult.error) {
+    return res.status(400).json({
+      message: {
+        msgBody:
+          "Oops!!! Sending complain Failed Please Enter All Fields information Correctly.",
+        msgError: true,
+      },
+    });
+  }
+  
+  if (matric.toString().length !== 9) {
+    return res.status(400).json({
+      message: {
+        msgBody: "Please!!! Enter A Valid Matric Number",
+        msgError: true,
+      },
+    });
+  }
+
+  const { level,matric, complain} = req.body;
+  const complainData = { level,matric, complain}
+  const newComplain = await Complain.create(complainData);
+ 
+  newComplain.save()
+  .then(()=>{
+    res.status(201).json("Complain was sucessfully saved to database");
+   
+}).catch(() => {
+  console.log('Something went wrong')
+})
+})
+ 
+
 //User Login
 userRouter.post(
   "/userLogin",
@@ -146,7 +190,7 @@ userRouter.post(
           isAuthenticated: false,
           msgError: true,
         });
-      }
+      } 
   }
 );
 
@@ -461,5 +505,3 @@ userRouter.get('/pastQuestions', (req, res) => {
 })
 
 module.exports = userRouter;
-
-

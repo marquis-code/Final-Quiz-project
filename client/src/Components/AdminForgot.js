@@ -14,6 +14,7 @@ const AdminForgot = (props) => {
     setUser({ ...user, [e.target.name]: e.target.value }); //pull out everything in the user object and override it with specific input target
   };
 
+
   const onSubmit = (e) => {
     e.preventDefault();
      
@@ -31,7 +32,7 @@ const AdminForgot = (props) => {
         html: `Please Check ${user.email} for password reset link. RESET LINK IS VALID FOR 30 MINUTES`,
         classes: "tost-valid",
         displayLength: 3000,
-      })
+      });
     })
     .catch(() => {
       M.toast({ 
@@ -60,6 +61,7 @@ const AdminForgot = (props) => {
                 <div className="wrap-input100 input-field">
                   <i className="material-icons prefix">edit</i>
                   <input
+                  autoComplete="new-password"
                     type="email"
                     name="email"
                     value={user.email}
@@ -89,3 +91,5 @@ const AdminForgot = (props) => {
 };
 
 export default AdminForgot;
+
+

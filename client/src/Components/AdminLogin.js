@@ -73,6 +73,7 @@ const AdminLogin = (props) => {
                 >
                   <i className="material-icons prefix">account_circle</i>
                   <input
+                  autoComplete="new-password"
                     type="number"
                     name="matric"
                     onChange={onChange}
@@ -93,6 +94,7 @@ const AdminLogin = (props) => {
                 >
                   <i className="material-icons prefix">lock</i>
                   <input
+                  autoComplete="new-password"
                     type={passwordShown ? "text" : "password"}
                     name="password"
                     onChange={onChange}

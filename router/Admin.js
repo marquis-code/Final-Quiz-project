@@ -5,6 +5,7 @@ const JWT = require("jsonwebtoken");
 const passportConfig = require("../passport");
 const Quiz_Statistics = require("../models/QuizStatistics");
 const Admin = require("../models/Admin");
+const Complain = require ("../models/Complain");
 const User = require("../models/User");
  const { registerSchema } = require("../models/validations/authValidation");
  const { loginSchema } = require("../models/validations/loginValidation");
@@ -240,6 +241,15 @@ adminRouter.get('/allUsers', passport.authenticate("local-adminJwt", {
           });
       }
     );   
+
+    adminRouter.get('/allComplains', passport.authenticate("local-adminJwt", {
+      session: false,
+    }), async(req, res)=>{
+        const allComplains = await Complain.find().sort({level : 1});
+         return res.status(200).json(allComplains);
+    });
+    
+    
 
 //Get quiz statistics
  adminRouter.get('/playerStat', passport.authenticate("local-adminJwt", {

@@ -35,7 +35,7 @@ class PastQuestions extends Component {
         <Fragment>
         {questions.map((Question, index)=>(
            questions.length > 0 ? (
-            <Fragment  key={index}>
+        <Fragment  key={index}> 
             <PastQuestionsList approvedPastQuestions={Question}/> 
        </Fragment>
            ) : (<h2>

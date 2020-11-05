@@ -38,6 +38,9 @@ const handleChange = event => {
     setUser({ ...user, newPassword: event.target.value });
 };
 
+const resetForm = () => {
+  setUser({ newPassword: ""});
+};
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -53,7 +56,7 @@ const handleChange = event => {
         classes: "tost-valid",
         displayLength: 3000,
       })
-      setUser({ ...user});
+      resetForm();
     })
     .catch(() => {
       M.toast({ 
@@ -85,6 +88,7 @@ const handleChange = event => {
               <div className="wrap-input100 input-field">
             <i className="material-icons prefix">edit</i>
                 <input
+                    autoComplete="new-password"
                     onChange={handleChange}
                     value={newPassword}
                     type={passwordShown ? "text" : "password"}

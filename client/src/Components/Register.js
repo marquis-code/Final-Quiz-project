@@ -89,6 +89,7 @@ const togglePasswordVisibility = () => {
                 >
                   <i className="material-icons prefix">account_box</i>
                   <input
+                  autoComplete="new-password"
                     type="text"
                     name="username"
                     value={user.username}
@@ -105,6 +106,7 @@ const togglePasswordVisibility = () => {
                 <div className="wrap-input100 input-field">
                   <i className="material-icons prefix">edit</i>
                   <input
+                  autoComplete="new-password"
                     type="number"
                     name="matric"
                     value={user.matric}
@@ -121,6 +123,7 @@ const togglePasswordVisibility = () => {
                 <div className="wrap-input100 input-field">
                   <i className="material-icons prefix">edit</i>
                   <input
+                  autoComplete="new-password"
                     type="email"
                     name="email"
                     value={user.email}
@@ -137,6 +140,7 @@ const togglePasswordVisibility = () => {
                 <div className="wrap-input100 input-field ">
                   <i className="material-icons prefix">lock</i>
                   <input
+                  autoComplete="new-password"
                     type={passwordShown ? "text" : "password"}
                     name="password"
                     value={user.password}
@@ -160,6 +164,7 @@ const togglePasswordVisibility = () => {
                 <div className="wrap-input100 input-field">
                   <i className="material-icons prefix">account_circle</i>
                   <input
+                  autoComplete="new-password"
                     type="text"
                     name="role"
                     value={user.role}

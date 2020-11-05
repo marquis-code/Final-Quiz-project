@@ -11,12 +11,15 @@ render(){
          <h3 className="errorText">Thanks For Participating in this week's Nimelssa Online Quiz.</h3>
          <p className="errorTextParagraph">The winner will be announced by the academic committee.</p>
           <p className="errorTextParagraph">Have a great weekend.</p>
-         <h3>
+         <h5>
          <span className="right"><Link style={{textDecoration:"none", listStyleType:"none"}} to="/">Return Home</Link></span>
-         </h3>
-        <h3>
+         </h5>
+        <h5>
          <span className="left"><Link style={{textDecoration:"none", listStyleType:"none"}} to="/pastQuestionsList">Acces past questions and answers</Link></span>
-        </h3>
+        </h5>
+        <h5>
+         <span className="left"><Link style={{textDecoration:"none", listStyleType:"none"}} to="/complain">Complains</Link></span>
+        </h5>
          </div>
         </Fragment>
     )

@@ -61,7 +61,6 @@ class LandingPage extends Component {
       <title>Nimelssa Quiz-Admin page</title>
     </Helmet>
         <div className="container">
-          {/* <Table responsive="sm"  className="table table-striped table-bordered"> */}
           <Table responsive="sm">
             <thead className="thead-dark">
               <tr>
@@ -131,6 +130,10 @@ class LandingPage extends Component {
           <button className="btn btn-success mt-3">
             <Link to="/pastQuestion"><span style={{color: "white", fontWeight: "bolder" }}>Set past question</span></Link>
           </button> 
+
+          <button className="btn btn-success mt-3">
+            <Link to="/userComplains"><span style={{color: "white", fontWeight: "bolder" }}>Complains</span></Link>
+          </button>
         </div>
       </Fragment>
     );

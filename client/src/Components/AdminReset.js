@@ -18,12 +18,11 @@ const AdminReset = ({ match }) => {
     newPassword: ''
   });
 
-
   useEffect(() => {
     let token = match.params.token;
     let { username } = JWT.decode(token);
     if (token) {
-         setUser({ ...user, username, token }); 
+       setUser({ ...user, username, token });
      }
 }, []);  //made a change(passed match.prams.token and user to the dependency array)
 
@@ -35,6 +34,10 @@ const { username, token, newPassword } = user;
 
 const handleChange = event => {
     setUser({ ...user, newPassword: event.target.value });
+};
+
+const resetForm = () => {
+  setUser({ newPassword: ""});
 };
 
 
@@ -52,7 +55,7 @@ const handleChange = event => {
           classes: "tost-valid",
           displayLength: 3000,
         }); 
-      setUser({ ...user});              
+     resetForm();           
     })
     .catch(() => {
       M.toast({ 
@@ -63,8 +66,6 @@ const handleChange = event => {
         setUser({ ...user });
     });
   };
-
- /* */
 
   return (
     <Fragment>
@@ -85,6 +86,7 @@ const handleChange = event => {
               <div className="wrap-input100 input-field">
             <i className="material-icons prefix">edit</i>
                 <input
+                    autoComplete="new-password"
                     onChange={handleChange}
                     value={newPassword}
                     type={passwordShown ? "text" : "password"}

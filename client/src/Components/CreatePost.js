@@ -130,6 +130,7 @@ class CreatePost extends Component {
           <div className="form-group">
             <label htmlFor="text">Question Category:</label>
             <input
+            autoComplete="new-password"
               ref={this.categoryRef}
               type="text"
               value={this.state.category}
@@ -146,6 +147,7 @@ class CreatePost extends Component {
           <div className="form-group">
             <label htmlFor="text">Question:</label>
             <input
+            autoComplete="new-password"
               type="text"
               name="question"
               className="form-control"
@@ -161,6 +163,7 @@ class CreatePost extends Component {
           <div className="form-group">
             <label htmlFor="text">Option A:</label>
             <input
+            autoComplete="new-password"
               type="text"
               value={this.state.optionA}
               className="form-control"
@@ -176,6 +179,7 @@ class CreatePost extends Component {
           <div className="form-group">
             <label htmlFor="text">Option B:</label>
             <input
+            autoComplete="new-password"
               type="text"
               value={this.state.optionB}
               className="form-control"
@@ -191,6 +195,7 @@ class CreatePost extends Component {
           <div className="form-group">
             <label htmlFor="text">Option C:</label>
             <input
+            autoComplete="new-password"
               type="text"
               value={this.state.optionC}
               className="form-control"
@@ -206,6 +211,7 @@ class CreatePost extends Component {
           <div className="form-group">
             <label htmlFor="text">Option D:</label>
             <input
+            autoComplete="new-password"
               type="text"
               value={this.state.optionD}
               className="form-control"
@@ -221,6 +227,7 @@ class CreatePost extends Component {
           <div className="form-group">
             <label htmlFor="text">Answer:</label>
             <input
+            autoComplete="new-password"
               type="text"
               value={this.state.answer}
               className="form-control"

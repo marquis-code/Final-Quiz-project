@@ -1,23 +1,23 @@
 import React, { Component, Fragment } from "react";
 import { Helmet } from "react-helmet";
 import axios from "axios";
-import { setPastQuestionErrors } from "./Corrections/pastQuestionErrors";
+import { complainErrors } from "./Corrections/complainErrors"; 
 import M from 'materialize-css';
 
-class CreatePastQuestions extends Component {
+class Complain extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      category: "",
-      question: "",
-      answer: "",
+      level: "",
+      matric: "",
+      complain: "",
       errors: {},
     };
-    this.categoryRef = React.createRef();
+    this.matricRef = React.createRef();
   }
 
   componentDidMount() {
-    this.categoryRef.current.focus();
+    this.matricRef.current.focus();
   }
 
   handleChange = ({ target }) => {
@@ -25,15 +25,11 @@ class CreatePastQuestions extends Component {
     this.setState({ [name]: value });
   };
 
-  validateInputs = (
-    question,
-    category,
-    answer
-  ) => {
-    const errors = setPastQuestionErrors(
-      question,
-      category,
-      answer
+  validateInputs = (level,matric,complain) => {
+    const errors = complainErrors(
+        level,
+        matric,
+        complain
     );
     this.setState({ errors: errors });
     return Object.values(errors).every((err) => err === "");
@@ -41,33 +37,23 @@ class CreatePastQuestions extends Component {
 
   submit = (event) => {
     event.preventDefault();
-    const {
-      question,
-      category,
-      answer,
-    } = this.state;
+    const {level,matric,complain} = this.state;
 
-    if (
-      this.validateInputs(
-        question,
-        category,
-        answer
-      )
-    ) {
+    if ( this.validateInputs(level, matric, complain)) {
       const payload = {
-        category: this.state.category,
-        question: this.state.question,
-        answer: this.state.answer
-      };
+        level: this.state.level,
+        matric: this.state.matric,
+        complain: this.state.complain
+    };
 
       axios({
-        url: "/quiz/pastQuestions",
+        url: "/user/complain",
         method: "POST",
         data: payload,
       })
         .then(() => {
           M.toast({ 
-            html: "New Past question was successfully created",
+            html: "Your Complain was successfully created",
             classes: "tost-valid",
             displayLength: 1500,
           })
@@ -86,9 +72,9 @@ class CreatePastQuestions extends Component {
 
   resetUserInput = () => {
     this.setState({
-      category: "",
-      question: "",
-      answer: ""
+        level: "",
+        matric: "",
+        complain: ""
     });
   };
 
@@ -96,60 +82,63 @@ class CreatePastQuestions extends Component {
     return (
       <Fragment>
         <Helmet>
-          <title>Nimelssa Online Quiz-Create Past Question page</title>
+          <title>Nimelssa Online Quiz-Complain page</title>
         </Helmet>
         <form onSubmit={this.submit}>
           <div className="form-group">
-            <label htmlFor="text">Question Category:</label>
+            <label htmlFor="text">Matric:</label>
             <input
             autoComplete="new-password"
-              ref={this.categoryRef}
-              type="text"
-              value={this.state.category}
-              name="category"
+              ref={this.matricRef}
+              type="number"
+              value={this.state.matric}
+              name="matric"
               className="form-control"
-              placeholder="Enter Question Category Here"
+              placeholder="Enter Matric Here"
               onChange={this.handleChange}
             />
-            {this.state.errors.category && (
-              <div className="text-danger">{this.state.errors.category}</div>
+            {this.state.errors.matric && (
+              <div className="text-danger">{this.state.errors.matric}</div>
             )}
           </div>
 
           <div className="form-group">
-            <label htmlFor="text">Question:</label>
+            <label htmlFor="text">Level:</label>
             <input
             autoComplete="new-password"
-              type="text"
-              name="question"
+              type="number"
+              name="level"
               className="form-control"
-              placeholder="Enter Question here"
-              value={this.state.question}
+              placeholder="Enter Level here(e.g. 100)"
+              value={this.state.level}
               onChange={this.handleChange}
             />
-            {this.state.errors.question && (
-              <div className="text-danger">{this.state.errors.question}</div>
+            {this.state.errors.level && (
+              <div className="text-danger">{this.state.errors.level}</div>
             )}
           </div>
 
           <div className="form-group">
-            <label htmlFor="text">Answer:</label>
-            <input
+            <label htmlFor="text">Complain:</label>
+            <textarea
             autoComplete="new-password"
+              rows={3}
               type="text"
-              value={this.state.answer}
+              cols={5}
+              value={this.state.complain}
               className="form-control"
-              name="answer"
-              placeholder="Enter Answer"
+              name="complain"
+              placeholder="Enter Complain here"
               onChange={this.handleChange}
             />
-            {this.state.errors.answer && (
-              <div className="text-danger">{this.state.errors.answer}</div>
+            {this.state.errors.complain && (
+              <div className="text-danger">{this.state.errors.complain}</div>
             )}
           </div>
+
           <button type="submit" className="btn btn-success mt-3">
             <i className="far fa-check-square"></i>
-           <span> &nbsp;Create Question</span>
+           <span> &nbsp;Submit complain</span>
           </button>
         </form>
       </Fragment>
@@ -157,4 +146,4 @@ class CreatePastQuestions extends Component {
   }
 }
 
-export default CreatePastQuestions;
+export default Complain;

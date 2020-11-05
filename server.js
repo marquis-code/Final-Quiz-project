@@ -40,7 +40,7 @@ const userRouter = require("./router/User");
 const quizRouter = require("./router/Quiz");
 const adminRouter = require("./router/Admin"); 
 
-app.use(morgan("tiny"));
+app.use(morgan("dev"));
 app.use("/admin", adminRouter);
 app.use("/user", userRouter);
 app.use("/quiz", quizRouter);

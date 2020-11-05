@@ -60,6 +60,7 @@ const Forgot = (props) => {
                 <div className="wrap-input100 input-field">
                   <i className="material-icons prefix">edit</i>
                   <input
+                  autoComplete="new-password"
                     type="email"
                     name="email"
                     value={user.email}

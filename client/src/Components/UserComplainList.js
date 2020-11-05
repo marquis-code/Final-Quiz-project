@@ -3,36 +3,36 @@ import { Helmet } from 'react-helmet';
 import Loader from 'react-loader-spinner';
 import Moment from "react-moment";
 
-function PastQuestionsList(props) {
-   const {approvedPastQuestions} = props;
+function UserComplainList(props) {
+   const {userComplains} = props;
    const [isLoading, setIsLoading] = useState(true);
 
-   const pastQuestionList = () => {
+   const userComplainPage = () => {
        return(
         <Fragment>
         <Helmet>
-          <title>Nimelssa Quiz-past questions List</title>
+          <title>Nimelssa Quiz-complain List</title>
         </Helmet>
             <div className="container">
               <table className="table table-striped table-bordered">
                 <thead className="thead-dark">
-                <tr> 
-                    <th scope="col">Quiz Date</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Question</th>
-                    <th scope="col">Answer</th>
+                <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">matric</th>
+                    <th scope="col">Level</th>
+                    <th scope="col">Complain</th>
                 </tr>
                 </thead>
                 <tbody>
                     <tr>
                       <td>
                         <Moment format="DD/MM/YYYY">
-                          {approvedPastQuestions.date}
+                          {userComplains.date}
                         </Moment>
-                     </td>
-                      <td>{approvedPastQuestions.category}</td>
-                      <td>{approvedPastQuestions.question}</td>
-                      <td>{approvedPastQuestions.answer}</td>
+                      </td>
+                      <td>{userComplains.matric}</td>
+                      <td>{userComplains.level}</td>
+                      <td>{userComplains.complain}</td>
                    </tr>   
                 </tbody> 
               </table>
@@ -51,7 +51,7 @@ function PastQuestionsList(props) {
      }
    }, [])
 
-    return isLoading ? <Loader className="loader" type="Ball-Grid" color="00BFFF" height={100} width={100}/> : pastQuestionList();
+    return isLoading ? <Loader className="loader" type="Ball-Triangle" color="00BFFF" height={100} width={100}/> : userComplainPage();
 }
 
-export default PastQuestionsList;
+export default UserComplainList;
